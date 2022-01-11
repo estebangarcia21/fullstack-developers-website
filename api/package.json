@@ -9,7 +9,9 @@
     "dev-server": "sls offline start"
   },
   "dependencies": {
+    "dotenv": "^11.0.0",
     "express": "^4.17.2",
+    "mongodb": "^4.3.0",
     "serverless-http": "^2.7.0"
   },
   "devDependencies": {
