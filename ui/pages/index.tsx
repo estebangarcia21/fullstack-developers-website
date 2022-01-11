@@ -1,7 +1,7 @@
-import { ContentContainer } from 'components/ContentContainer'
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import styles from 'styles/pages/Home.module.scss'
+import { ContentContainer } from 'components/ContentContainer';
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import styles from 'styles/pages/Home.module.scss';
 
 const Home: NextPage = () => {
   return (
@@ -23,7 +23,7 @@ const Home: NextPage = () => {
         <section className={styles.section}></section>
       </main>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

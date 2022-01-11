@@ -1,9 +1,9 @@
-import styles from './ContentContainer.module.scss'
+import styles from './ContentContainer.module.scss';
 
 export interface ContentContainerProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export function ContentContainer({ children }: ContentContainerProps) {
-  return <div className={styles.container}>{children}</div>
+  return <div className={styles.container}>{children}</div>;
 }

@@ -1,9 +1,9 @@
-import { Children } from 'utils/commonTypes'
-import { ContentContainer } from './ContentContainer'
-import styles from './IndexSection.module.scss'
+import { Children } from 'utils/commonTypes';
+import { ContentContainer } from './ContentContainer';
+import styles from './IndexSection.module.scss';
 
 export interface IndexSectionProps extends Children {
-  name: string
+  name: string;
 }
 
 export function IndexSection({ name, children }: IndexSectionProps) {
@@ -15,5 +15,5 @@ export function IndexSection({ name, children }: IndexSectionProps) {
         {children}
       </ContentContainer>
     </section>
-  )
+  );
 }
