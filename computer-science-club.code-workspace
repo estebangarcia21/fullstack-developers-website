@@ -6,6 +6,9 @@
     {
       "name": "computer-science-club",
       "path": "."
+    },
+    {
+      "path": "api"
     }
   ],
   "settings": {
