@@ -1,14 +1,16 @@
 {
   "folders": [
     {
+      "name": "ui",
       "path": "ui"
+    },
+    {
+      "name": "api",
+      "path": "api"
     },
     {
       "name": "computer-science-club",
       "path": "."
-    },
-    {
-      "path": "api"
     }
   ],
   "settings": {
