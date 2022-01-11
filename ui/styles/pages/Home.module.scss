@@ -1,0 +1,23 @@
+@import 'styles/theme.scss';
+@import 'styles/screens.scss';
+
+$section-padding: 64px;
+
+.container {
+  > section {
+    padding: $section-padding 0;
+  }
+}
+
+.header {
+  padding: 42px 0;
+  background-color: $theme-color-a;
+
+  color: white;
+}
+
+@include largeScreen {
+  .container {
+    margin: 10px;
+  }
+}
