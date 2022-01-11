@@ -2,25 +2,28 @@ import dotenv from 'dotenv';
 import express, { NextFunction, Request, Response } from 'express';
 import { MongoClient } from 'mongodb';
 import serverless from 'serverless-http';
+import router from './routes';
 
 function mongoClientMiddleware(req: Request, _: Response, next: NextFunction) {
-  const mongoClient = new MongoClient('mongodb://localhost:27020/mydb');
-  req.mongoClient = mongoClient;
+  req.getMongoDb = async (name: MongoDbName) => {
+    const mongoClient = new MongoClient(process.env.MONGO_URL);
+    await mongoClient.connect();
+
+    return mongoClient.db(name);
+  };
 
   next();
 }
 
 function buildHandler() {
-  dotenv.config();
+  dotenv.config({
+    path: process.env.NODE_ENV === 'production' ? '.env' : '.env.local',
+  });
 
   const app = express();
 
   app.use(mongoClientMiddleware);
-
-  app.get('/api', (req, res) => {
-    console.log(req.mongoClient);
-    res.send('Hello World!');
-  });
+  app.use('/api', router);
 
   return serverless(app);
 }
