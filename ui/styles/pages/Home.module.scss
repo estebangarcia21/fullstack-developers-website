@@ -4,20 +4,98 @@
 $section-padding: 64px;
 
 .container {
-  > section {
-    padding: $section-padding 0;
-  }
+  min-height: 100vh;
+  background-color: hsl(0, 0%, 10%);
 }
 
 .header {
-  padding: 42px 0;
-  background-color: $theme-color-a;
+  padding-top: 64px;
 
-  color: white;
+  > h3 {
+    font-weight: 800;
+    color: rgb(85, 173, 255);
+  }
+
+  > h1 {
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: white;
+  }
+
+  .description {
+    margin: 25px 0px;
+    max-width: 40ch;
+
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: white;
+  }
+
+  .joinButton {
+    cursor: pointer;
+    display: inline-block;
+
+    border: none;
+    width: 100%;
+    padding: 16px;
+
+    border-radius: 6px;
+    font-size: 1rem;
+
+    font-weight: 600;
+    color: white;
+
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.151);
+
+    background-image: linear-gradient(
+      to right,
+      hsl(216, 67%, 43%),
+      hsl(209, 54%, 49%)
+    );
+  }
 }
 
-@include largeScreen {
-  .container {
-    margin: 10px;
+.overview {
+  margin-top: 280px;
+
+  .titleContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .icon {
+      $size: 2rem;
+      width: $size;
+      height: $size;
+      margin-right: 16px;
+    }
+
+    > h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: white;
+    }
   }
+}
+
+/** Navbar **/
+.navbar {
+  background-color: hsl(0, 0%, 9%);
+  height: 96px;
+  border-bottom: 1px solid rgb(37, 37, 37);
+
+  .content {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+}
+
+.crownIcon {
+  $size: 42px;
+  width: $size;
+  height: $size;
+
+  margin-right: 16px;
+  fill: rgb(25, 212, 218);
 }

@@ -1,17 +1,11 @@
-import { Db, MongoClient } from 'mongodb';
+import { Collection, MongoClient } from 'mongodb';
 
 declare global {
-  export type MongoDbName = 'csc';
-
-  declare namespace Express {
-    export interface Request {
-      getMongoDb: (dbName: MongoDbName) => Promise<Db>;
-    }
-  }
-
   declare namespace NodeJS {
     export interface ProcessEnv {
       MONGO_URL: string;
+      MONGO_PASSWORD: string;
+      SESSION_SECRETS: string;
     }
   }
 }

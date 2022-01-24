@@ -12,10 +12,5 @@
       "name": "computer-science-club",
       "path": "."
     }
-  ],
-  "settings": {
-    "cssModules.pathAlias": {
-      "styles/*": "${workspaceFolder}/ui/styles/*"
-    }
-  }
+  ]
 }

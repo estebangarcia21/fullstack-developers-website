@@ -1,12 +1,32 @@
-$text-large-size: 1.5em;
-$text-medium-size: 1.25em;
-$text-small-size: 1em;
-$text-x-small-size: 0.875em;
+$text-xl: 3em;
+$text-lg: 2em;
+$text-md: 1.5em;
+$text-sm: 1.15em;
+$text-xs: 0.85em;
 
 $font-mono: 'Fira Code', monospace;
 
-$theme-color-a: #3b3cf6;
-$theme-color-b: #335ed4;
-$theme-color-c: #449deb;
-$theme-color-d: #33b3d4;
-$theme-color-e: #3bf6ea;
+$gray-a: #eaeaea;
+
+$theme-color-a: #210dfa;
+$theme-color-b: #570bde;
+$theme-color-c: #9d00f5;
+$theme-color-d: #ca0bde;
+$theme-color-e: #fa0dac;
+
+$cubic-transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+
+@mixin primary-button() {
+  background-color: $theme-color-e;
+  border: none;
+  padding: 10px 50px;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+  color: black;
+  transition: $cubic-transition;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $theme-color-d;
+  }
+}

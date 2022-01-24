@@ -1,10 +1,10 @@
-@mixin largeScreen() {
-  @media (min-width: 1025px) {
+@mixin large-screen() {
+  @media (min-width: 1125px) {
     @content;
   }
 }
 
-@mixin smallScreen() {
+@mixin small-screen() {
   @media (min-width: 1024px) {
     @content;
   }

@@ -1,14 +1,17 @@
 import { Router } from 'express';
+import assignments from './assignments';
+import user from './user';
+import auth from './auth';
+
+export interface RouterConfig {
+  route: string;
+  router: Router;
+}
 
 const router = Router();
 
-router.get('/users', async ({ getMongoDb }, res) => {
-  const db = await getMongoDb('csc');
-  const collection = db.collection('users');
-
-  const users = await collection.find().toArray();
-
-  res.send(users);
-});
+router.use(assignments.route, assignments.router);
+router.use(user.route, user.router);
+router.use(auth.route, auth.router);
 
 export default router;

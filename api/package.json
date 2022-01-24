@@ -9,13 +9,18 @@
     "dev-server": "sls offline start"
   },
   "dependencies": {
+    "argon2": "^0.28.3",
+    "connect-mongo": "^4.6.0",
     "dotenv": "^11.0.0",
     "express": "^4.17.2",
+    "express-session": "^1.17.2",
     "mongodb": "^4.3.0",
     "serverless-http": "^2.7.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
+    "@types/express-session": "^1.17.4",
+    "express-validator": "^6.14.0",
     "nodemon": "^2.0.15",
     "serverless-offline": "^8.3.1"
   }
