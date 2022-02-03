@@ -1,7 +1,9 @@
 import { Request, Response, Router } from 'express';
-import { validationResult } from 'express-validator';
+import { body, param, query, validationResult } from 'express-validator';
 import { RouterConfig } from '.';
+import { ResetPasswordTokens } from '../models/reset_password_tokens';
 import { UserRepository } from '../models/user';
+import { passwordValidator } from '../passwordValidator';
 import { checkTypedSchema } from '../typedSchema';
 
 const route = '/';
@@ -22,7 +24,7 @@ router.post(
     },
     password: {
       in: 'body',
-      exists: true
+      custom: { options: passwordValidator }
     }
   }),
   async (req: Request, res: Response) => {
@@ -63,6 +65,48 @@ router.post(
       success: true,
       message: 'Successfully logged in'
     });
+  }
+);
+
+router.post(
+  '/reset-password',
+  query('email').isEmail().optional(),
+  query('token').optional(),
+  body('password').custom(passwordValidator),
+  param('token'),
+  async (req, res) => {
+    const { token, email } = req.query ?? {};
+
+    const tokenDocument = await ResetPasswordTokens.findUnique(req, email);
+
+    if (token) {
+      if (!tokenDocument) {
+        return res.error(400, {
+          message: 'No password reset token found for the specified email'
+        });
+      }
+
+      const isValidToken = await ResetPasswordTokens.verifyToken(
+        req,
+        email,
+        token
+      );
+
+      if (!isValidToken) {
+        return res.error(400, {
+          message: 'Invalid password reset token'
+        });
+      }
+
+      await UserRepository.updatePassword(req, email, req.body.password);
+      await ResetPasswordTokens.delete(req, email);
+
+      return res.data({ message: 'Password successfully updated' });
+    }
+
+    await ResetPasswordTokens.create(req, email);
+
+    return res.data({ message: 'Password reset token successfully created' });
   }
 );
 

@@ -3,7 +3,11 @@ import { Collection, MongoClient } from 'mongodb';
 import { AnyRequest } from '../models';
 
 export type MongoDbName = 'website';
-export type MongoDbCollectionName = 'assignments' | 'users';
+export type MongoDbCollectionName =
+  | 'assignments'
+  | 'users'
+  | 'sessions'
+  | 'reset_password_tokens';
 
 export async function getMongoClient(): Promise<MongoClient> {
   const mongoClient = new MongoClient(

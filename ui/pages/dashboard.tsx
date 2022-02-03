@@ -28,27 +28,15 @@ export default function Dashboard() {
               <DashboardWeekResource
                 week={2}
                 resources={[
-                  {
-                    name: 'Course outline',
-                    type: 'Reading',
-                  },
-                  {
-                    name: 'Introduction video',
-                    type: 'Video',
-                  },
+                  { name: 'Course outline', type: 'Reading' },
+                  { name: 'Introduction video', type: 'Video' },
                 ]}
               />
               <DashboardWeekResource
                 week={1}
                 resources={[
-                  {
-                    name: 'Course outline',
-                    type: 'Reading',
-                  },
-                  {
-                    name: 'Introduction video',
-                    type: 'Video',
-                  },
+                  { name: 'Course outline', type: 'Reading' },
+                  { name: 'Introduction video', type: 'Video' },
                 ]}
               />
             </div>

@@ -28,6 +28,13 @@ interface UserDocument {
   lastName: string;
   email: string;
   password: string;
+  /**
+   * The role of the user.
+   * @default member
+   * @example
+   * - admin
+   * - member
+   */
   role: UserRole;
 }
 
@@ -52,6 +59,18 @@ export class UserRepository {
     }
 
     return await col.findOne<User>({ _id: sanitizedId }, MONGO_USER_OPTS);
+  }
+
+  static async updatePassword(
+    req: AnyRequest,
+    email: string,
+    newPassword: string
+  ) {
+    const col = await req.getMongoCollection('website', 'users');
+
+    const passwordHash = await argon.hash(newPassword);
+
+    return await col.updateOne({ email }, { $set: { password: passwordHash } });
   }
 
   /**
@@ -83,6 +102,16 @@ export class UserRepository {
     };
 
     return await col.insertOne(newUser);
+  }
+
+  static async updateOne(
+    req: AnyRequest,
+    email: string,
+    update: Partial<UserDocument>
+  ) {
+    const col = await req.getMongoCollection('website', 'users');
+
+    return await col.updateOne({ email }, { $set: update });
   }
 
   /**

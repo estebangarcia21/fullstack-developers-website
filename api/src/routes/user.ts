@@ -3,6 +3,7 @@ import { param, validationResult } from 'express-validator';
 import { RouterConfig } from '.';
 import { CreateUserInput, UserRepository } from '../models/user';
 import mongoObjectIdSanitizer from '../mongoObjectIdSanitizer';
+import { passwordValidator } from '../passwordValidator';
 import { checkTypedSchema } from '../typedSchema';
 
 const route = '/users';
@@ -45,13 +46,10 @@ router.post(
     },
     password: {
       in: 'body',
-      isLength: {
-        options: { min: 8, max: 20 },
-        errorMessage: 'Password must be between 8 and 20 characters'
-      },
       exists: {
         errorMessage: 'Password is required'
-      }
+      },
+      custom: { options: passwordValidator }
     }
   }),
   async (req: Request, res: Response) => {
