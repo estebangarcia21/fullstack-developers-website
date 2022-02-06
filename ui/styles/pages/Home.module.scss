@@ -1,101 +1,192 @@
 @import 'styles/theme.scss';
 @import 'styles/screens.scss';
 
-$section-padding: 64px;
+@mixin description-text($color) {
+  color: $color;
+  line-height: 2;
+}
+
+@mixin button($bg-color) {
+  border: none;
+  padding: 20px 30px;
+  background: $bg-color;
+  box-shadow: 0px 0px 15px rgba(109, 219, 206, 0.53);
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #030303;
+  height: min-content;
+  cursor: pointer;
+}
+
+@mixin pre-section-title($color) {
+  font-family: $font-mono;
+  color: $color;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.25rem;
+  font-size: 1rem;
+}
+
+.title {
+  margin: 10px 0px;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.description {
+  @include description-text(#5c5c5c);
+}
 
 .container {
+  overflow-x: hidden;
   min-height: 100vh;
-  background-color: hsl(0, 0%, 10%);
 }
 
 .header {
-  padding-top: 64px;
+  padding-top: 25px;
 
-  > h3 {
-    font-weight: 800;
-    color: rgb(85, 173, 255);
+  .title {
+    font-weight: bold;
+    font-size: 3rem;
   }
 
-  > h1 {
-    font-size: 2.3rem;
-    font-weight: 700;
-    color: white;
-  }
-
-  .description {
-    margin: 25px 0px;
-    max-width: 40ch;
-
-    font-size: 1.15rem;
-    font-weight: 500;
-    color: white;
-  }
-
-  .joinButton {
-    cursor: pointer;
-    display: inline-block;
-
-    border: none;
-    width: 100%;
-    padding: 16px;
-
-    border-radius: 6px;
+  .subtitle {
     font-size: 1rem;
-
     font-weight: 600;
     color: white;
 
-    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.151);
+    margin-bottom: 5px;
+  }
 
-    background-image: linear-gradient(
-      to right,
-      hsl(216, 67%, 43%),
-      hsl(209, 54%, 49%)
-    );
+  .description {
+    font-family: $primary-font;
+    font-weight: 500;
+    font-size: 1.4rem;
+    color: #494949;
+    line-height: 1.5;
+    margin: 45px 0;
+  }
+
+  .buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .joinButton {
+      @include button(#a6fcc8);
+    }
   }
 }
 
-.overview {
-  margin-top: 280px;
+.circleSection {
+  position: relative;
+  max-width: 100vw;
+  margin-top: 40px;
+}
 
-  .titleContainer {
+.buildAppsSection {
+  margin-top: 160px;
+
+  > h3 {
+    @include pre-section-title(#4cc9b2);
+  }
+
+  > h1 {
+  }
+
+  .exploreContainer {
+    margin-top: 30px;
+    margin-bottom: 135px;
+
     display: flex;
     flex-direction: row;
-    align-items: center;
 
-    .icon {
-      $size: 2rem;
-      width: $size;
-      height: $size;
-      margin-right: 16px;
+    .button {
+      @include button(#a6fce2);
+
+      flex: 1;
     }
 
-    > h1 {
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: white;
+    .img {
+      flex: 3;
+      width: 100%;
+      height: auto;
     }
   }
 }
 
-/** Navbar **/
-.navbar {
-  background-color: hsl(0, 0%, 9%);
-  height: 96px;
-  border-bottom: 1px solid rgb(37, 37, 37);
+.learnBackendSection {
+  overflow: hidden;
+  position: relative;
+
+  padding: 60px 0px 180px 0px;
+
+  > h3 {
+    @include pre-section-title(#7fc1fd);
+  }
+
+  > h1 {
+    margin: 10px 0px;
+    font-size: 2rem;
+    font-weight: 600;
+    color: white;
+  }
+
+  p {
+    @include description-text(white);
+  }
+
+  .highlightsContainer {
+    margin-top: 50px;
+  }
+}
+
+.learnBackendHighlight {
+  > h1 {
+    margin-bottom: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #53e0ff;
+  }
+
+  > p {
+    font-size: 0.9rem;
+  }
+
+  margin-bottom: 35px;
+}
+
+.formConnectionsSection {
+  margin-top: 100px;
+  position: relative;
+  overflow: hidden;
+
+  h3 {
+    @include pre-section-title(#4cc9b2);
+  }
 
   .content {
-    display: flex;
-    align-items: center;
-    height: 100%;
+    width: 65%;
+
+    .buttonsContainer {
+      margin-top: 30px;
+      position: relative;
+
+      .button {
+        @include button(#a6fcc8);
+
+        $x-padding: 50px;
+        padding-left: $x-padding;
+        padding-right: $x-padding;
+      }
+    }
+
+    .img {
+      position: absolute;
+      right: 0;
+      transform: translateX(50%);
+      height: 70%;
+    }
   }
-}
-
-.crownIcon {
-  $size: 42px;
-  width: $size;
-  height: $size;
-
-  margin-right: 16px;
-  fill: rgb(25, 212, 218);
 }

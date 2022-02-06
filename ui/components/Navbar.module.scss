@@ -1,0 +1,15 @@
+.container {
+  padding-top: 20px;
+  display: flex;
+}
+
+.menuIcon {
+  color: white;
+  margin-left: auto;
+
+  $size: 32px;
+  width: $size;
+  height: $size;
+
+  cursor: pointer;
+}
