@@ -7,6 +7,8 @@ import Head from 'next/head';
 import React from 'react';
 import styles from 'styles/pages/Home.module.scss';
 
+const SKEW_DEG = 6;
+
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
@@ -17,7 +19,12 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.container}>
-        <SkewBackground color="#58D088" deg={12} skewAxis="Y" height="45%">
+        <SkewBackground
+          color="#58D088"
+          deg={SKEW_DEG}
+          skewAxis="Y"
+          height="45%"
+        >
           <Navbar />
 
           <ContentContainer>
@@ -84,7 +91,7 @@ const Home: NextPage = () => {
           </section>
         </ContentContainer>
 
-        <SkewBackground color="#0D4242" skewAxis="Y" deg={11}>
+        <SkewBackground color="#0D4242" skewAxis="Y" deg={SKEW_DEG}>
           <Circle
             opacity={0.5}
             color="#5CECDB"
@@ -96,7 +103,7 @@ const Home: NextPage = () => {
             color="#5CECDB"
             coords={[, , 0, 0]}
             size={200}
-            transform={['50%', '-15%']}
+            transform={['50%', '30%']}
           />
 
           <ContentContainer>
@@ -135,15 +142,15 @@ const Home: NextPage = () => {
             </h1>
           </ContentContainer>
 
-          <div className={styles.content}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/Connect-World-Vector.svg"
-              alt=""
-              className={styles.img}
-            />
+          <ContentContainer>
+            <div className={styles.content}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/Connect-World-Vector.svg"
+                alt=""
+                className={styles.img}
+              />
 
-            <ContentContainer>
               <p className={styles.description}>
                 Form long lasting connections with students at Franklin and
                 professional developers to help you advance your career as a
@@ -153,8 +160,8 @@ const Home: NextPage = () => {
               <div className={styles.buttonsContainer}>
                 <button className={styles.button}>View our socials</button>
               </div>
-            </ContentContainer>
-          </div>
+            </div>
+          </ContentContainer>
         </section>
 
         <Footer />
