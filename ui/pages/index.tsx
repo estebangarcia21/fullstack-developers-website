@@ -1,5 +1,6 @@
 import { ContentContainer } from 'components/ContentContainer';
 import { Footer } from 'components/Footer';
+import { HomeSqlView } from 'components/HomeSqlView';
 import { Navbar } from 'components/Navbar';
 import { SkewBackground } from 'components/SkewBackground';
 import type { NextPage } from 'next';
@@ -8,6 +9,24 @@ import React from 'react';
 import styles from 'styles/pages/Home.module.scss';
 
 const SKEW_DEG = 6;
+const SQL_OUTPUTS = {
+  left: `\
+---------------------------------
+|  id  | first_name | last_name |
+---------------------------------
+|  00  | Esteban    | Garcia    |
+|  01  | John       | Doe       |
+|  02  | Bobby      | Brown     |
+---------------------------------`,
+  right: `\
+--------------
+| first_name |
+--------------
+| Esteban    |
+| John       |
+| Bobby      |
+--------------`,
+};
 
 const Home: NextPage = () => {
   return (
@@ -51,25 +70,27 @@ const Home: NextPage = () => {
           </ContentContainer>
         </SkewBackground>
 
-        <div className={styles.circleSection}>
-          {/* Left Circles */}
-          <Circle size={100} coords={[0, 0, 0, 0]} transform={['-55%', 0]} />
-          <Circle
-            size={150}
-            opacity={0.2}
-            coords={[0, 50, 0, 0]}
-            transform={['-85%', 0]}
-          />
+        <ContentContainer noPadding>
+          <div className={styles.circleSection}>
+            {/* Left Circles */}
+            <Circle size={100} coords={[0, 0, 0, 0]} transform={['-55%', 0]} />
+            <Circle
+              size={150}
+              opacity={0.2}
+              coords={[0, 50, 0, 0]}
+              transform={['-85%', 0]}
+            />
 
-          {/* Right Circles */}
-          <Circle size={150} coords={[, , 0]} transform={['50%', '-25%']} />
-          <Circle
-            coords={[, , 0]}
-            size={120}
-            opacity={0.2}
-            transform={['60%', '-65%']}
-          />
-        </div>
+            {/* Right Circles */}
+            <Circle size={150} coords={[, , 0]} transform={['50%', '-25%']} />
+            <Circle
+              coords={[, , 0]}
+              size={120}
+              opacity={0.2}
+              transform={['60%', '-65%']}
+            />
+          </div>
+        </ContentContainer>
 
         <ContentContainer>
           <section className={styles.buildAppsSection}>
@@ -85,8 +106,10 @@ const Home: NextPage = () => {
             <div className={styles.exploreContainer}>
               <button className={styles.button}>Explore</button>
 
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/Mobile-Vector.svg" alt="" className={styles.img} />
+              <div className={styles.imgContainer}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/Mobile-Vector.svg" alt="" className={styles.img} />
+              </div>
             </div>
           </section>
         </ContentContainer>
@@ -105,30 +128,47 @@ const Home: NextPage = () => {
             size={200}
             transform={['50%', '30%']}
           />
-
           <ContentContainer>
             <section className={styles.learnBackendSection}>
-              <h3>MANAGE BIG DATA</h3>
+              <div className={styles.textContainer}>
+                <div className={styles.header}>
+                  <h3>MANAGE BIG DATA</h3>
 
-              <h1>Learn database and server development</h1>
+                  <h1>Learn database and server development</h1>
 
-              <p>
-                Leverage the most modern frameworks used in the software
-                development industry to build professional-grade mobile apps.{' '}
-              </p>
+                  <p>
+                    Leverage the most modern frameworks used in the software
+                    development industry to build professional-grade mobile
+                    apps.{' '}
+                  </p>
+                </div>
 
-              <div className={styles.highlightsContainer}>
-                <LearnBackendHighlight title="Learn SQL">
-                  The most in demand skillset for developers. So in demand, that
-                  its assumed that each developers has some form of knowledge of
-                  SQL.
-                </LearnBackendHighlight>
+                <div className={styles.highlightsContainer}>
+                  <LearnBackendHighlight title="Learn SQL">
+                    The most in demand skillset for developers. So in demand,
+                    that its assumed that each developers has some form of
+                    knowledge of SQL.
+                  </LearnBackendHighlight>
 
-                <LearnBackendHighlight title="Learn APIs">
-                  Learn how servers and website communicate with eachother using
-                  custom web URLs.
-                </LearnBackendHighlight>
+                  <LearnBackendHighlight title="Learn APIs">
+                    Learn how servers and website communicate with eachother
+                    using custom web URLs.
+                  </LearnBackendHighlight>
+                </div>
               </div>
+
+              <HomeSqlView
+                left={{
+                  propertySelection: ['*'],
+                  table: 'users',
+                  output: SQL_OUTPUTS.left,
+                }}
+                right={{
+                  propertySelection: ['first_name'],
+                  table: 'users',
+                  output: SQL_OUTPUTS.right,
+                }}
+              />
             </section>
           </ContentContainer>
         </SkewBackground>
@@ -138,18 +178,18 @@ const Home: NextPage = () => {
             <h3>FORM CONNECTIONS</h3>
 
             <h1 className={styles.title}>
-              Connect with the developer community
+              Connect with the <br /> developer community
             </h1>
           </ContentContainer>
 
           <ContentContainer>
             <div className={styles.content}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/Connect-World-Vector.svg"
-                alt=""
-                className={styles.img}
-              />
+              <ContentContainer noPadding>
+                <div className={styles.imgContainer}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/Connect-World-Vector.svg" alt="" />
+                </div>
+              </ContentContainer>
 
               <p className={styles.description}>
                 Form long lasting connections with students at Franklin and

@@ -1,3 +1,9 @@
+@mixin extra-large-screen() {
+  @media (min-width: 1300px) {
+    @content;
+  }
+}
+
 @mixin large-screen() {
   @media (min-width: 1125px) {
     @content;
@@ -10,8 +16,14 @@
   }
 }
 
-@mixin tablet() {
+@mixin medium-screen() {
   @media (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin min-screen($width) {
+  @media (min-width: $width) {
     @content;
   }
 }

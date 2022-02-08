@@ -1,0 +1,70 @@
+@import 'styles/screens.scss';
+
+/* Colors */
+$default: #92d2ce;
+$keyword: #d2d092;
+$selection: #d292b1;
+$table: #a292d2;
+
+.container {
+  border-radius: 8px;
+  border: 1px dashed rgba(98, 225, 219, 0.37);
+  padding: 12px;
+
+  display: flex;
+  flex-direction: column;
+
+  div + div {
+    margin-top: 20px;
+  }
+
+  .sqlView {
+    flex: 1;
+
+    .code {
+      color: $default;
+      font-size: 0.9rem;
+      font-variant-ligatures: none;
+
+      .keyword {
+        color: $keyword;
+      }
+
+      .table {
+        color: $table;
+      }
+
+      .selection {
+        color: $selection;
+      }
+
+      strong {
+        font-weight: 500;
+      }
+    }
+  }
+
+  .output {
+    opacity: 0.3;
+    font-weight: 500;
+    color: white;
+  }
+}
+
+@include medium-screen() {
+  .container {
+    flex-direction: row;
+
+    div + div {
+      margin-top: 0;
+    }
+
+    .sqlView {
+      flex: 3;
+    }
+
+    .output {
+      flex: 1;
+    }
+  }
+}

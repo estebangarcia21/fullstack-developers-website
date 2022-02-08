@@ -1,12 +1,20 @@
 @import 'styles/theme.scss';
 
-$max-width: 1400px;
 $padding-x: 50px;
 
-.container {
-  max-width: 1100px;
+@mixin container-base() {
+  max-width: $content-max-width;
   padding: 0 $padding-x;
   margin: 0 auto;
   height: 100%;
   width: 100%;
+}
+
+.container {
+  @include container-base();
+}
+
+.noPaddingContainer {
+  @include container-base();
+  padding: 0;
 }

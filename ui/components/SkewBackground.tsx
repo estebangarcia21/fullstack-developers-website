@@ -22,7 +22,7 @@ export function SkewBackground({
           overflow: 'hidden',
           width: '100%',
           transform: `skew${skewAxis}(-${Math.abs(deg)}deg)`,
-          transformOrigin: 'left top',
+          transformOrigin: 'left bottom',
           zIndex: 0,
           height,
         }}
