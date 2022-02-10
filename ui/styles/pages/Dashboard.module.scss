@@ -1,0 +1,11 @@
+@import 'styles/screens.scss';
+
+.navbar {
+  height: 68px;
+  border-bottom: 1px solid rgb(224, 224, 224);
+
+  .links {
+  }
+
+  background-color: responsive(red, blue, green);
+}

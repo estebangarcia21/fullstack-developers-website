@@ -88,6 +88,15 @@
 .buildAppsSection {
   margin-top: 160px;
 
+  @include medium-screen() {
+    text-align: center;
+
+    > p {
+      max-width: 70ch;
+      margin: 0 auto;
+    }
+  }
+
   > h3 {
     @include pre-section-title(#4cc9b2);
   }
@@ -110,9 +119,22 @@
       width: 100%;
       height: auto;
 
+      @include medium-screen() {
+        flex: 1;
+        position: relative;
+        padding-bottom: 250px;
+        min-width: 450px;
+        width: 500px;
+      }
+
       > img {
         width: 100%;
         height: auto;
+
+        @include medium-screen() {
+          position: absolute;
+          left: 0;
+        }
       }
     }
   }
@@ -124,6 +146,22 @@
 
   padding: 60px 0px 150px 0px;
 
+  @include medium-screen() {
+    margin-right: 50px;
+  }
+
+  @include large-screen() {
+    padding-bottom: 200px;
+
+    .textContainer {
+      display: flex;
+    }
+  }
+
+  @include extra-large-screen() {
+    padding-bottom: 250px;
+  }
+
   h3 {
     @include pre-section-title(#7fc1fd);
   }
@@ -133,10 +171,18 @@
     font-size: 2rem;
     font-weight: 600;
     color: white;
+
+    @include medium-screen() {
+      font-size: 2.5rem;
+    }
   }
 
   p {
     @include description-text(white);
+
+    @include large-screen() {
+      max-width: 40ch;
+    }
   }
 
   .highlightsContainer {
@@ -162,12 +208,22 @@
 .formConnectionsSection {
   margin-top: 100px;
 
+  @include extra-large-screen() {
+    margin-top: 40px;
+  }
+
   h3 {
     @include pre-section-title(#4cc9b2);
   }
 
   .content {
     width: 65%;
+
+    @include medium-screen() {
+      > p {
+        max-width: 35ch;
+      }
+    }
 
     .buttonsContainer {
       margin-top: 30px;
@@ -187,89 +243,17 @@
       height: auto;
       width: min(100vw, $content-max-width - 100px);
 
-      img {
+      > img {
         position: absolute;
         height: 200px;
         right: 0;
         transform: translate(20%, -15%);
-      }
-    }
-  }
-}
 
-@include medium-screen() {
-  .formConnectionsSection {
-    .content {
-      .imgContainer {
-        > img {
+        @include medium-screen() {
           height: 300px;
           transform: translateY(-35%);
         }
       }
-
-      > p {
-        max-width: 35ch;
-      }
     }
-  }
-
-  .buildAppsSection {
-    text-align: center;
-
-    > p {
-      max-width: 70ch;
-      margin: 0 auto;
-    }
-
-    .exploreContainer {
-      .imgContainer {
-        flex: 1;
-        position: relative;
-        padding-bottom: 250px;
-        min-width: 450px;
-        width: 500px;
-
-        > img {
-          position: absolute;
-          left: 0;
-        }
-      }
-    }
-  }
-
-  .learnBackendSection {
-    .header {
-      margin-right: 50px;
-
-      > h1 {
-        font-size: 2.5rem;
-      }
-    }
-  }
-}
-
-@include large-screen() {
-  .learnBackendSection {
-    padding-bottom: 200px;
-
-    .textContainer {
-      display: flex;
-    }
-
-    .header {
-      > p {
-        max-width: 40ch;
-      }
-    }
-  }
-}
-
-@include extra-large-screen() {
-  .formConnectionsSection {
-    margin-top: 40px;
-  }
-
-  .learnBackendSection {
-    padding-bottom: 250px;
   }
 }

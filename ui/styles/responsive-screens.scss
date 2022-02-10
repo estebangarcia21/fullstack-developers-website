@@ -1,0 +1,7 @@
+@use 'sass:selector';
+
+@mixin responsive($width) {
+  @media (min-width: $width) {
+    @content;
+  }
+}
