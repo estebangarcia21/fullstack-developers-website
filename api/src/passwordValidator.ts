@@ -1,3 +1,8 @@
+const PASSWORD_REGEX = /[A-Z]/;
+
+const REGEX_BODY = '!@#$%^&*()_+-=[]{};\':"\\|,.<>/?';
+const CUSTOM_TOKEN_REGEX = new RegExp(`/[${REGEX_BODY}]/`);
+
 /**
  * Validates a password.
  *
@@ -17,15 +22,17 @@ export function passwordValidator(value: string) {
     return Promise.reject('Password must be less than 20 characters long');
   }
 
-  if (!/[A-Z]/.test(value)) {
+  const doesNotMatch = (regex: RegExp) => !regex.test(value);
+
+  if (doesNotMatch(PASSWORD_REGEX)) {
     return Promise.reject(
       'Password must contain at least one uppercase letter'
     );
   }
 
-  if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(value)) {
+  if (doesNotMatch(CUSTOM_TOKEN_REGEX)) {
     return Promise.reject(
-      'Password must contain at least one special character: !@#$%^&*()_+-=[]{};\':"|,.<>/?'
+      `Password must contain at least one special character: ${REGEX_BODY}`
     );
   }
 

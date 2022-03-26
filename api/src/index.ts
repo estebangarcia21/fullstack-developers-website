@@ -10,7 +10,12 @@ import { resUtilMiddleware } from './middleware/resUtilMiddleware';
 import router from './routes';
 import { SESSION_COOKIE_NAME } from './session';
 
-function buildServerlessHandler() {
+/**
+ * Builds the express application.
+ *
+ * @returns The API application.
+ */
+export function buildApp(): express.Application {
   dotenv.config({
     path:
       process.env.NODE_ENV === 'production' ? '.env.production' : '.env.local'
@@ -47,7 +52,7 @@ function buildServerlessHandler() {
 
   app.use('/api/v1', router);
 
-  return serverless(app);
+  return app;
 }
 
-export const handler = buildServerlessHandler();
+export const handler = serverless(buildApp());

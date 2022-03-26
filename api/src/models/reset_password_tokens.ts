@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongodb';
 import { AnyRequest } from '.';
+import {} from './userRepo';
 
 export interface ResetPasswordTokensDocument {
   _id: ObjectId;

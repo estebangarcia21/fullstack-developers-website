@@ -1,7 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
-import { UserRepository, UserRole, USER_ROLE_PRIORITIES } from '../models/user';
+import { UserRepository, UserRole, USER_ROLE_PRIORITIES } from '../models/userRepo';
 
-export default function roleMiddleware(role: UserRole) {
+/**
+ * A middleware that requires a certain type of User before executing the route.
+ * @param role The role that the user must have to access the route
+ * @returns Middleware function
+ */
+export default function permissions(role: UserRole) {
   return async function (req: Request, res: Response, next: NextFunction) {
     const { userId } = req.session;
 
@@ -25,6 +30,9 @@ export default function roleMiddleware(role: UserRole) {
 declare global {
   namespace Express {
     export interface Request {
+      /**
+       * The session user id, not part of the express sessions API.
+       */
       userId?: string;
     }
   }

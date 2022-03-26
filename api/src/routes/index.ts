@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import assignments from './assignments';
-import user from './user';
+import user from './userRoutes';
 import auth from './auth';
 
 export interface RouterConfig {

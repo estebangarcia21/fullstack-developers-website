@@ -2,7 +2,7 @@ import { Request, Response, Router } from 'express';
 import { body, param, query, validationResult } from 'express-validator';
 import { RouterConfig } from '.';
 import { ResetPasswordTokens } from '../models/reset_password_tokens';
-import { UserRepository } from '../models/user';
+import { UserRequest, UserUtil } from '../models/userRepo';
 import { passwordValidator } from '../passwordValidator';
 import { checkTypedSchema } from '../typedSchema';
 
@@ -13,6 +13,8 @@ interface LoginResult {
   success: boolean;
   message?: string;
 }
+
+router.post('is-authenticated', () => {});
 
 router.post(
   '/login',
@@ -36,7 +38,7 @@ router.post(
     }
 
     const { email, password } = req.body;
-    const { result, userId } = await UserRepository.auth(req, email, password);
+    const { result, userId } = await UserUtil.auth(req, email, password);
 
     if (result === 'authenticated' && req.session.userId) {
       return res.data<LoginResult>({
@@ -74,8 +76,8 @@ router.post(
   query('token').optional(),
   body('password').custom(passwordValidator),
   param('token'),
-  async (req, res) => {
-    const { token, email } = req.query ?? {};
+  async (req: UserRequest, res: Response) => {
+    const { token, email } = (req.query as Record<string, string>) ?? {};
 
     const tokenDocument = await ResetPasswordTokens.findUnique(req, email);
 
@@ -98,7 +100,7 @@ router.post(
         });
       }
 
-      await UserRepository.updatePassword(req, email, req.body.password);
+      await UserUtil.updatePassword(req, email, req.body.password);
       await ResetPasswordTokens.delete(req, email);
 
       return res.data({ message: 'Password successfully updated' });

@@ -1,26 +1,30 @@
-import { Request, Response, Router } from 'express';
+import { Response, Router } from 'express';
 import { param, validationResult } from 'express-validator';
 import { RouterConfig } from '.';
-import roleMiddleware from '../middleware/roleMiddleware';
+import permissions from '../middleware/permissions';
 import {
-  AssignmentRepository,
+  Assignment,
   CreateAssignmentInput,
   Resource
 } from '../models/assignment';
 import mongoObjectIdSanitizer from '../mongoObjectIdSanitizer';
+import { repository, RepositoryRequest } from '../repo';
 import { checkTypedSchema } from '../typedSchema';
 
 const route = '/assignments';
 const router = Router();
 
-router.get('/', roleMiddleware('member'), async (req, res) => {
-  const assignments = await AssignmentRepository.findAll(req);
-  return res.data(assignments);
+router.use('/', repository('website', 'assignments'));
+type AssignmentsRequest = RepositoryRequest<Assignment>;
+
+router.get('/', async (req: AssignmentsRequest, res: Response) => {
+  const data = await req.repository.findAll();
+  return res.data(data);
 });
 
 router.post(
   '/',
-  roleMiddleware('admin'),
+  permissions('admin'),
   checkTypedSchema<CreateAssignmentInput>({
     title: {
       in: 'body',
@@ -57,7 +61,7 @@ router.post(
       }
     }
   }),
-  async (req: Request, res: Response) => {
+  async (req: AssignmentsRequest, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.error(400, {
@@ -68,7 +72,7 @@ router.post(
 
     const { title, description, week, resources } = req.body;
 
-    const assignmentResult = await AssignmentRepository.findOne(req, { week });
+    const assignmentResult = await req.repository.findOne({ week });
     if (assignmentResult) {
       return res.error(400, {
         message: 'Assignment already exists for that week',
@@ -83,21 +87,21 @@ router.post(
       resources
     };
 
-    const assignment = await AssignmentRepository.create(req, input);
+    const assignment = await req.repository.create(input);
     res.data(assignment);
   }
 );
 
 router.put(
   '/',
-  roleMiddleware('admin'),
+  permissions('admin'),
   param('id').exists().customSanitizer(mongoObjectIdSanitizer),
   async (req, res) => {}
 );
 
 router.delete(
   '/:id',
-  roleMiddleware('admin'),
+  permissions('admin'),
   param('id').customSanitizer(mongoObjectIdSanitizer),
   async (req, res) => {}
 );

@@ -1,19 +1,26 @@
-import { Request, Response, Router } from 'express';
+import { Response, Router } from 'express';
 import { param, validationResult } from 'express-validator';
 import { RouterConfig } from '.';
-import { CreateUserInput, UserRepository } from '../models/user';
+import {
+  CreateUserInput,
+  userRepository,
+  UserRequest
+} from '../models/userRepo';
 import mongoObjectIdSanitizer from '../mongoObjectIdSanitizer';
 import { passwordValidator } from '../passwordValidator';
+import { repository } from '../repo';
 import { checkTypedSchema } from '../typedSchema';
 
 const route = '/users';
 const router = Router();
 
+router.use('/', userRepository);
+
 router.get(
   '/:id',
   param('id').customSanitizer(mongoObjectIdSanitizer),
-  async (req, res) => {
-    const user = await UserRepository.findUnique(req, req.params!.id);
+  async (req: UserRequest, res) => {
+    const user = await req.repository.findUnique(req.params!.id);
     if (!user) {
       return res.error(404, { message: 'User does not exist' });
     }
@@ -52,7 +59,7 @@ router.post(
       custom: { options: passwordValidator }
     }
   }),
-  async (req: Request, res: Response) => {
+  async (req: UserRequest, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.error(400, {
@@ -61,12 +68,12 @@ router.post(
       });
     }
 
-    const { email, firstName, lastName, password } = req.body;
+    const { firstName, lastName, password, email } = req.body;
 
-    const user = await UserRepository.create(req, {
-      email,
+    const user = await req.repository.create({
       firstName,
       lastName,
+      email,
       password
     });
 
