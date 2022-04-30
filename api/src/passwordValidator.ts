@@ -22,13 +22,7 @@ export function passwordValidator(value: string) {
     return Promise.reject('Password must be less than 20 characters long');
   }
 
-  const doesNotMatch = (regex: RegExp) => !regex.test(value);
-
-  if (doesNotMatch(PASSWORD_REGEX)) {
-    return Promise.reject(
-      'Password must contain at least one uppercase letter'
-    );
-  }
+  const doesNotMatch = (regex: RegExp) => regex.test(value);
 
   if (doesNotMatch(CUSTOM_TOKEN_REGEX)) {
     return Promise.reject(

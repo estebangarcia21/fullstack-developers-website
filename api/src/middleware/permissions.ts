@@ -1,5 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
-import { UserRepository, UserRole, USER_ROLE_PRIORITIES } from '../models/userRepo';
+import {
+  UserRepository,
+  UserRole,
+  USER_ROLE_PRIORITIES
+} from '../models/userRepo';
 
 /**
  * A middleware that requires a certain type of User before executing the route.
@@ -14,7 +18,9 @@ export default function permissions(role: UserRole) {
       return res.error(401, { message: 'Unauthorized' });
     }
 
-    const user = await UserRepository.findUnique(req, userId);
+    const { findUnique } = await UserRepository(req);
+
+    const user = await findUnique(userId);
     if (!user) {
       return res.error(401, { message: 'Unauthorized' });
     }

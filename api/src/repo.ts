@@ -23,7 +23,7 @@ interface Repository<U, C = OmitId<U>> {
     projection?: QueryProjection<T>
   ): Promise<T | null>;
   findAll<T = U>(
-    where: Where<T>,
+    where?: Where<T>,
     projection?: QueryProjection<T>
   ): Promise<T[]>;
   deleteMany(where: Where<U>): Promise<void>;
@@ -36,20 +36,20 @@ interface Repository<U, C = OmitId<U>> {
  * @returns The class instance
  */
 export const buildMongoRepository =
-  (
+  <U, C = OmitId<U>>(
     dbName: MongoDbName,
     colName: MongoDbCollectionName,
     defaultProjection: QueryProjection
   ) =>
-  async <U>(request: AnyRequest): Promise<Repository<U>> => {
+  async (request: AnyRequest): Promise<Repository<U, C>> => {
     const defaultMongoOpts = {
       projection: { _id: 0, projection: defaultProjection }
     };
 
-    const RepositoryClass = class implements Repository<U> {
+    const RepositoryClass = class implements Repository<U, C> {
       constructor(private readonly collection: Collection<Document>) {}
 
-      async create(data: OmitId<U>): Promise<InsertOneResult<Document>> {
+      async create(data: C): Promise<InsertOneResult<Document>> {
         return await this.collection.insertOne(data);
       }
 
@@ -108,18 +108,13 @@ export const buildMongoRepository =
 
 /**
  * A middleware that attaches a repository to the Express request.
- * @param dbName
- * @param colName
  * @returns
  */
 export function repository<U>(
-  dbName: MongoDbName,
-  colName: MongoDbCollectionName,
-  defaultProjection: QueryProjection<U> = {}
+  repo: ReturnType<typeof buildMongoRepository>
 ): any {
   return async (req: RepositoryRequest<U>, _: Response, next: NextFunction) => {
-    const fn = buildMongoRepository(dbName, colName, defaultProjection);
-    req.repository = await fn(req);
+    req.repository = await repo(req);
 
     next();
   };

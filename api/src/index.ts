@@ -9,6 +9,7 @@ import mongoClientMiddleware, {
 import { resUtilMiddleware } from './middleware/resUtilMiddleware';
 import router from './routes';
 import { SESSION_COOKIE_NAME } from './session';
+import cors from 'cors';
 
 /**
  * Builds the express application.
@@ -28,6 +29,12 @@ export function buildApp(): express.Application {
   const clientPromise = getMongoClient();
 
   app.use(
+    cors({
+      origin: 'http://localhost:3000'
+    })
+  );
+
+  app.use(
     session({
       name: SESSION_COOKIE_NAME,
       secret: process.env.SESSION_SECRETS.split(','),
@@ -36,7 +43,8 @@ export function buildApp(): express.Application {
         maxAge: 1000 * 60 * 60 * 24 * 7,
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict'
+        sameSite: 'lax',
+        path: '/'
       },
       resave: false,
       unset: 'destroy',
@@ -50,7 +58,7 @@ export function buildApp(): express.Application {
   app.use(mongoClientMiddleware(clientPromise));
   app.use(resUtilMiddleware);
 
-  app.use('/api/v1', router);
+  app.use('/api', router);
 
   return app;
 }

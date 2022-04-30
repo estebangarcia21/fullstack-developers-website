@@ -15,8 +15,10 @@ export interface HomeSqlViewProps {
 export function HomeSqlView({ left, right }: HomeSqlViewProps) {
   return (
     <figure className={styles.container}>
-      <SqlView {...left} />
-      <SqlView {...right} />
+      <div className={styles.content}>
+        <SqlView {...left} />
+        <SqlView {...right} />
+      </div>
     </figure>
   );
 }

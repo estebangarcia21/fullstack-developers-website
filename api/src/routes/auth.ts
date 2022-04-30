@@ -14,7 +14,11 @@ interface LoginResult {
   message?: string;
 }
 
-router.post('is-authenticated', () => {});
+router.get('/is-authenticated', (req, res) => {
+  return res.data({
+    auth: req.session.userId !== undefined
+  });
+});
 
 router.post(
   '/login',

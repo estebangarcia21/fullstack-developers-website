@@ -1,7 +1,7 @@
 import argon from 'argon2';
 import { ObjectId } from 'mongodb';
 import { AnyRequest } from '.';
-import { repository, RepositoryRequest } from '../repo';
+import { buildMongoRepository, repository, RepositoryRequest } from '../repo';
 
 export const USER_ROLE_PRIORITIES: { [role in UserRole]: number } = {
   admin: 1,
@@ -22,7 +22,13 @@ export type User = Pick<
   '_id' | 'firstName' | 'lastName' | 'role'
 >;
 
-export const userRepository = repository('website', 'users', { password: 0 });
+export const UserRepository = buildMongoRepository<UserDocument>(
+  'website',
+  'users',
+  {
+    password: 0
+  }
+);
 
 interface UserDocument {
   _id: ObjectId;

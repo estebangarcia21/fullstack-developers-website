@@ -7,47 +7,55 @@ $selection: #d292b1;
 $table: #a292d2;
 
 .container {
-  border-radius: 8px;
-  border: 1px dashed rgba(98, 225, 219, 0.37);
-  padding: 12px;
+  // box shadow
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  margin-top: 35px;
 
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
+  .content {
+    border-radius: 8px;
+    border: 1px solid rgba(98, 225, 219, 0.37);
+    padding: 12px;
+    overflow: hidden;
+    // Inner box shadow
 
-  @include medium-screen() {
-    grid-template-columns: 1fr 1fr;
-  }
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
 
-  .sqlView {
-    flex: 1;
+    @include medium-screen() {
+      grid-template-columns: 1fr 1fr;
+    }
 
-    .code {
-      color: $default;
-      font-size: 0.9rem;
-      font-variant-ligatures: none;
+    .sqlView {
+      flex: 1;
 
-      .keyword {
-        color: $keyword;
-      }
+      .code {
+        color: $default;
+        font-size: 0.9rem;
+        font-variant-ligatures: none;
 
-      .table {
-        color: $table;
-      }
+        .keyword {
+          color: $keyword;
+        }
 
-      .selection {
-        color: $selection;
-      }
+        .table {
+          color: $table;
+        }
 
-      strong {
-        font-weight: 500;
+        .selection {
+          color: $selection;
+        }
+
+        strong {
+          font-weight: 500;
+        }
       }
     }
-  }
 
-  .output {
-    opacity: 0.3;
-    font-weight: 500;
-    color: white;
+    .output {
+      opacity: 0.3;
+      font-weight: 500;
+      color: white;
+    }
   }
 }

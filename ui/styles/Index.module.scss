@@ -1,0 +1,345 @@
+@import 'theme.scss';
+@import 'screens.scss';
+
+@mixin button($bg-color) {
+  border: none;
+  padding: 20px 30px;
+  background: $bg-color;
+  box-shadow: 0px 0px 15px rgba($bg-color, 0.2);
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 14px;
+  color: white;
+  height: min-content;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+
+  &:hover {
+    background: lighten($bg-color, 10%);
+  }
+}
+
+.navbar {
+  height: 76px;
+  margin-bottom: 60px;
+  position: relative;
+
+  .bottomDivider {
+    height: 1px;
+    width: 100%;
+    background-color: rgba(201, 201, 201, 0.3);
+    height: 4px;
+    border-radius: 50px;
+    position: absolute;
+    border: none;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 75%;
+  }
+}
+
+.pageHeader {
+  text-align: center;
+  
+  > h1 {
+    font-size: 3em;
+    font-weight: 900;
+    margin-bottom: 0;
+
+    @include medium-screen() {
+      font-size: 4em;
+    }
+  }
+
+  > p {
+    font-size: 1em;
+    font-weight: 400;
+    margin-bottom: 0;
+    line-height: 1.8;
+    margin-top: 5px;
+    color: #494949;
+    margin: 20px 0;
+    
+    @include medium-screen() {
+      font-size: 1.5em; 
+    }
+  }
+
+  .joinButton {
+    @include button($theme-color-a);
+
+    &:hover {
+      background-color: $theme-color-b;
+    }
+  }
+}
+
+.overview {
+  > h1 {
+    margin-top: 50px;
+    font-size: 2em;
+    font-weight: 500;
+  }
+}
+
+// --- LEGACY ---
+@import 'styles/theme.scss';
+@import 'styles/screens.scss';
+
+@mixin description-text($color) {
+  color: $color;
+  line-height: 2;
+}
+
+@mixin pre-section-title($color) {
+  font-family: $font-mono;
+  color: $color;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.25rem;
+  font-size: 1rem;
+}
+
+.title {
+  margin: 10px 0px;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.description {
+  @include description-text(#5c5c5c);
+}
+
+.container {
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+.header {
+  padding-top: 25px;
+
+  .title {
+    font-weight: bold;
+    font-size: 3rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+
+    margin-bottom: 5px;
+  }
+
+  .description {
+    font-family: $primary-font;
+    font-weight: 500;
+    font-size: 1.4rem;
+    color: #494949;
+    line-height: 1.5;
+    margin: 45px 0;
+  }
+
+  .buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .joinButton {
+      @include button(#a6fcc8);
+    }
+  }
+}
+
+.circleSection {
+  position: relative;
+  max-width: 100vw;
+  margin-top: 40px;
+}
+
+.buildAppsSection {
+  margin-top: 160px;
+
+  @include medium-screen() {
+    text-align: center;
+
+    > p {
+      max-width: 70ch;
+      margin: 0 auto;
+    }
+  }
+
+  > h3 {
+    @include pre-section-title(#4c7ec9);
+  }
+
+  .exploreContainer {
+    margin-top: 30px;
+    margin-bottom: 135px;
+
+    display: flex;
+    flex-direction: row;
+
+    .button {
+      @include button(#39279e);
+
+      flex: 1;
+    }
+
+    .imgContainer {
+      flex: 3;
+      width: 100%;
+      height: auto;
+
+      @include medium-screen() {
+        flex: 1;
+        position: relative;
+        padding-bottom: 250px;
+        min-width: 450px;
+        width: 500px;
+      }
+
+      > img {
+        width: 100%;
+        height: auto;
+
+        @include medium-screen() {
+          position: absolute;
+          left: 0;
+        }
+      }
+    }
+  }
+}
+
+.learnBackendSection {
+  // overflow: hidden;
+  position: relative;
+
+  padding: 60px 0px 150px 0px;
+
+  @include medium-screen() {
+    margin-right: 50px;
+  }
+
+  @include large-screen() {
+    padding-bottom: 200px;
+
+    .textContainer {
+      display: flex;
+    }
+  }
+
+  @include extra-large-screen() {
+    padding-bottom: 250px;
+  }
+
+  h3 {
+    @include pre-section-title(#7fc1fd);
+  }
+
+  h1 {
+    margin: 10px 0px;
+    font-size: 2rem;
+    font-weight: 600;
+    color: white;
+
+    @include medium-screen() {
+      font-size: 2.5rem;
+    }
+  }
+
+  p {
+    @include description-text(white);
+
+    @include large-screen() {
+      max-width: 40ch;
+    }
+  }
+
+  .highlightsContainer {
+    margin-top: 50px;
+  }
+
+  .learnBackendHighlight {
+    > h1 {
+      margin-bottom: 5px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #53e0ff;
+    }
+
+    > p {
+      font-size: 0.9rem;
+    }
+
+    margin-bottom: 35px;
+  }
+}
+
+.formConnectionsSection {
+  margin-top: 100px;
+
+  @include extra-large-screen() {
+    margin-top: 80px;
+  }
+
+  h1 {
+    font-size: 2em;
+
+    @include medium-screen() {
+      font-size: 3em;
+      max-width: 15ch;
+    }
+  }
+
+  h3 {
+    @include pre-section-title(#4c8dc9);
+  }
+
+  .content {
+    width: 65%;
+    margin-bottom: 25px;
+
+    @include medium-screen() {
+      margin-bottom: 70px;
+
+      > p {
+        max-width: 35ch;
+      }
+    }
+
+    .buttonsContainer {
+      margin-top: 30px;
+      position: relative;
+
+      .button {
+        @include button(#3b178f);
+
+        $x-padding: 50px;
+        padding-left: $x-padding;
+        padding-right: $x-padding;
+      }
+    }
+
+    .imgContainer {
+      position: relative;
+      height: auto;
+
+      width: min(100vw, $content-max-width - 100px);
+
+      > img {
+        position: absolute;
+        height: 200px;
+        right: 0;
+        transform: translate(20%, -15%);
+
+        @include medium-screen() {
+          height: 400px;
+          transform: translate(35%, -45%);
+        }
+      }
+    }
+  }
+}

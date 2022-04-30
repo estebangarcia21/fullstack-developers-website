@@ -4,17 +4,18 @@ import { RouterConfig } from '.';
 import permissions from '../middleware/permissions';
 import {
   Assignment,
+  AssignmentsRepository,
   CreateAssignmentInput,
   Resource
 } from '../models/assignment';
 import mongoObjectIdSanitizer from '../mongoObjectIdSanitizer';
-import { repository, RepositoryRequest } from '../repo';
+import { RepositoryRequest } from '../repo';
 import { checkTypedSchema } from '../typedSchema';
 
 const route = '/assignments';
 const router = Router();
 
-router.use('/', repository('website', 'assignments'));
+router.use('/', AssignmentsRepository);
 type AssignmentsRequest = RepositoryRequest<Assignment>;
 
 router.get('/', async (req: AssignmentsRequest, res: Response) => {

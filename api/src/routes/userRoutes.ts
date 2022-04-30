@@ -3,7 +3,7 @@ import { param, validationResult } from 'express-validator';
 import { RouterConfig } from '.';
 import {
   CreateUserInput,
-  userRepository,
+  UserRepository,
   UserRequest
 } from '../models/userRepo';
 import mongoObjectIdSanitizer from '../mongoObjectIdSanitizer';
@@ -14,7 +14,7 @@ import { checkTypedSchema } from '../typedSchema';
 const route = '/users';
 const router = Router();
 
-router.use('/', userRepository);
+router.use('/', repository(UserRepository));
 
 router.get(
   '/:id',

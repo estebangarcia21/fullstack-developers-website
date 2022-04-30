@@ -20,4 +20,8 @@ export interface Resource {
   description: string;
 }
 
-export const assignmentsRepo = buildMongoRepository('website', 'assignments');
+export const AssignmentsRepository = buildMongoRepository<Assignment>(
+  'website',
+  'assignments',
+  {}
+);
