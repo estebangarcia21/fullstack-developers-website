@@ -114,6 +114,11 @@
 .container {
   overflow: hidden;
   min-height: 100vh;
+
+  margin-top: 60px;
+  @include medium-screen() {
+    margin-top: 100px;
+  }
 }
 
 .header {

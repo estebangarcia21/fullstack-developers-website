@@ -1,0 +1,98 @@
+@mixin auth-button() {
+  margin-top: 5px;
+  width: 100%;
+
+  background-color: rgb(54, 234, 162);
+  color: rgb(54, 36, 209);
+
+  border: none;
+  border-radius: 2px;
+  padding: 15px 10px;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
+.loginContainer {
+  display: flex;
+  justify-content: center;
+
+  > div {
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.361);
+    background-image: linear-gradient(
+      to bottom right,
+      rgb(54, 36, 209),
+      rgb(39, 65, 196)
+    );
+    margin: 60px 20px;
+
+    width: 100%;
+    max-width: 400px;
+
+    > form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+
+      > div {
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+
+        > label {
+          margin-bottom: 2px;
+          font-weight: 600;
+          color: white;
+        }
+
+        > input {
+          background-color: transparent;
+          border: 1px solid rgb(255, 255, 255);
+          border-radius: 2px;
+          padding: 8px 12px;
+          font-size: 0.85rem;
+          color: white;
+
+          transition: all 0.2s ease-in-out;
+
+          &:focus {
+            background-color: white;
+            color: black;
+          }
+        }
+      }
+
+      > button {
+        @include auth-button();
+      }
+    }
+  }
+}
+
+.dashboard {
+  text-align: center;
+  margin: 20px;
+
+  > h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+  }
+
+  button {
+    @include auth-button();
+
+    color: black;
+    margin-top: 20px;
+    max-width: 500px;
+  }
+}

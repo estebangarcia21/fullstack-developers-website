@@ -7,10 +7,6 @@ import styles from 'styles/Index.module.scss';
 export default function Home() {
   return (
     <div>
-      <nav className={styles.navbar}>
-        <hr className={styles.bottomDivider} />
-      </nav>
-
       <main className={styles.container}>
         <ContentContainer>
           <header className={styles.pageHeader}>
@@ -171,7 +167,7 @@ const SQL_OUTPUTS = {
 ---------------------------------
 |  id  | first_name | last_name |
 ---------------------------------
-|  00  | Esteban    | Garcia    |
+|  00  | Jose       | Cano      |
 |  01  | John       | Doe       |
 |  02  | Bobby      | Brown     |
 ---------------------------------`,
@@ -179,7 +175,7 @@ const SQL_OUTPUTS = {
 --------------
 | first_name |
 --------------
-| Esteban    |
+| Jose       |
 | John       |
 | Bobby      |
 --------------`,

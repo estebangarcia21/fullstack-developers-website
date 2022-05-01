@@ -27,7 +27,7 @@ export default function AdminLogin() {
     loginMutation.mutate(data, {
       onSuccess: ({ data }) => {
         if (data.data.success) {
-          router.reload();
+          router.push('/admin/dashboard');
         }
       },
     });
@@ -42,17 +42,23 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className={styles.loginPanel}>
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="email">Email</label>
-        <input {...register('email')} />
-        {errors.email && <span>This field is required</span>}
+    <div className={styles.loginContainer}>
+      <div>
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+          <div>
+            <label htmlFor="email">Email</label>
+            <input type="email" {...register('email')} />
+            {errors.email && <span>This field is required</span>}
+          </div>
 
-        <label htmlFor="password">Password</label>
-        <input {...register('password')} />
+          <div>
+            <label htmlFor="password">Password</label>
+            <input type="password" {...register('password')} />
+          </div>
 
-        <button type="submit">Login</button>
-      </form>
+          <button type="submit">Login</button>
+        </form>
+      </div>
     </div>
   );
 }

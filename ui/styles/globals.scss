@@ -22,6 +22,7 @@ h2,
 h3,
 h4,
 h5,
+label,
 button {
   font-family: $primary-font, sans-serif;
   font-weight: 400;
@@ -33,8 +34,13 @@ a {
 }
 
 p,
-li {
+li,
+input {
   font-family: $secondary-font, sans-serif;
+}
+
+input:focus {
+  outline: none;
 }
 
 pre code {

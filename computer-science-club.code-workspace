@@ -12,5 +12,8 @@
       "name": "computer-science-club",
       "path": "."
     }
-  ]
+  ],
+  "settings": {
+    "nuxt.isNuxtApp": false
+  }
 }
