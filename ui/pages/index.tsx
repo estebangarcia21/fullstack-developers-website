@@ -1,74 +1,29 @@
 import { ContentContainer } from 'components/ContentContainer';
 import { Footer } from 'components/Footer';
 import { HomeSqlView } from 'components/HomeSqlView';
-import { Navbar } from 'components/Navbar';
 import { SkewBackground } from 'components/SkewBackground';
-import type { NextPage } from 'next';
-import Head from 'next/head';
-import React from 'react';
-import styles from 'styles/pages/Home.module.scss';
+import styles from 'styles/Index.module.scss';
 
-const SKEW_DEG = 6;
-const SQL_OUTPUTS = {
-  left: `\
----------------------------------
-|  id  | first_name | last_name |
----------------------------------
-|  00  | Esteban    | Garcia    |
-|  01  | John       | Doe       |
-|  02  | Bobby      | Brown     |
----------------------------------`,
-  right: `\
---------------
-| first_name |
---------------
-| Esteban    |
-| John       |
-| Bobby      |
---------------`,
-};
-
-const Home: NextPage = () => {
+export default function Home() {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Franklin Fullstack Developers</title>
-        <meta name="description" content="Franklin Computer Science" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <div>
+      <nav className={styles.navbar}>
+        <hr className={styles.bottomDivider} />
+      </nav>
 
       <main className={styles.container}>
-        <SkewBackground
-          color="#58D088"
-          deg={SKEW_DEG}
-          skewAxis="Y"
-          height="45%"
-        >
-          <Navbar />
+        <ContentContainer>
+          <header className={styles.pageHeader}>
+            <h1>Learn Computer Science.</h1>
 
-          <ContentContainer>
-            <header className={styles.header}>
-              <h3 className={styles.subtitle}>Franklin High School</h3>
+            <p>
+              Learn how to create mobile applications, websites, use databases,
+              and more to build real-world applications.
+            </p>
 
-              <h1 className={styles.title}>
-                Fullstack
-                <br />
-                Developers
-                <br />
-                Club
-              </h1>
-
-              <p className={styles.description}>
-                Learn software engineering. <br /> No previous experience
-                necessary.
-              </p>
-
-              <div className={styles.buttonContainer}>
-                <button className={styles.joinButton}>Join the club</button>
-              </div>
-            </header>
-          </ContentContainer>
-        </SkewBackground>
+            <button className={styles.joinButton}>Become a member</button>
+          </header>
+        </ContentContainer>
 
         <ContentContainer noPadding>
           <div className={styles.circleSection}>
@@ -114,7 +69,7 @@ const Home: NextPage = () => {
           </section>
         </ContentContainer>
 
-        <SkewBackground color="#0D4242" skewAxis="Y" deg={SKEW_DEG}>
+        <SkewBackground color="#170d42" skewAxis="Y" deg={SKEW_DEG}>
           <Circle
             opacity={0.5}
             color="#5CECDB"
@@ -208,6 +163,26 @@ const Home: NextPage = () => {
       </main>
     </div>
   );
+}
+
+const SKEW_DEG = 6;
+const SQL_OUTPUTS = {
+  left: `\
+---------------------------------
+|  id  | first_name | last_name |
+---------------------------------
+|  00  | Esteban    | Garcia    |
+|  01  | John       | Doe       |
+|  02  | Bobby      | Brown     |
+---------------------------------`,
+  right: `\
+--------------
+| first_name |
+--------------
+| Esteban    |
+| John       |
+| Bobby      |
+--------------`,
 };
 
 interface LearnBackendHighlightProps {
@@ -254,7 +229,7 @@ function Circle({
         height: `${size}px`,
         backgroundImage: color
           ? undefined
-          : 'linear-gradient(to bottom right, #47D6AB, #4ADD58)',
+          : 'linear-gradient(to bottom right, #47d6cf, #4d4add)',
         backgroundColor: color,
         left: coords[0],
         top: coords[1],
@@ -262,10 +237,9 @@ function Circle({
         bottom: coords[3],
         borderRadius: 9999,
         opacity,
+        overflow: 'clip',
         transform: `translate(${transform[0]}, ${transform[1]})`,
       }}
     />
   );
 }
-
-export default Home;
