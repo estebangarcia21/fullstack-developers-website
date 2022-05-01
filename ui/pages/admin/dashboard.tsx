@@ -29,7 +29,7 @@ export default function AdminDashboard() {
 
   return (
     <div>
-      <div>FindString()()</div>
+      <div>Dashboard!</div>
     </div>
   );
 }
