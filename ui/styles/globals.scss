@@ -28,14 +28,16 @@ button {
   font-weight: 400;
 }
 
-a {
+a,
+button {
   color: inherit;
   text-decoration: none;
 }
 
 p,
 li,
-input {
+input,
+a {
   font-family: $secondary-font, sans-serif;
 }
 

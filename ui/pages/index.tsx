@@ -2,6 +2,7 @@ import { ContentContainer } from 'components/ContentContainer';
 import { Footer } from 'components/Footer';
 import { HomeSqlView } from 'components/HomeSqlView';
 import { SkewBackground } from 'components/SkewBackground';
+import Link from 'next/link';
 import styles from 'styles/Index.module.scss';
 
 export default function Home() {
@@ -9,6 +10,8 @@ export default function Home() {
     <div>
       <main className={styles.container}>
         <ContentContainer>
+          <h1 className={styles.clubName}>FULLSTACK DEVELOPERS CLUB</h1>
+
           <header className={styles.pageHeader}>
             <h1>Learn Computer Science.</h1>
 
@@ -17,7 +20,9 @@ export default function Home() {
               and more to build real-world applications.
             </p>
 
-            <button className={styles.joinButton}>Become a member</button>
+            <Link href="/join" passHref>
+              <button className={styles.joinButton}>Become a member</button>
+            </Link>
           </header>
         </ContentContainer>
 
@@ -79,6 +84,7 @@ export default function Home() {
             size={200}
             transform={['50%', '30%']}
           />
+
           <ContentContainer>
             <section className={styles.learnBackendSection}>
               <div className={styles.textContainer}>
@@ -149,7 +155,7 @@ export default function Home() {
               </p>
 
               <div className={styles.buttonsContainer}>
-                <button className={styles.button}>View our socials</button>
+                <button className={styles.button}>Learn about FHS CS</button>
               </div>
             </div>
           </ContentContainer>

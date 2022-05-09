@@ -1,0 +1,64 @@
+@import 'styles/screens.scss';
+
+@mixin button($bg-color, $font-color: white) {
+  display: inline-block;
+  text-align: center;
+  padding: 20px 40px;
+  border: none;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.125);
+  font-weight: 600;
+  border-radius: 3px;
+  font-size: 1rem;
+  background-color: $bg-color;
+  color: $font-color;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+.container {
+  min-height: 100vh;
+  background-image: linear-gradient(
+    to bottom,
+    rgb(92, 75, 202),
+    rgb(62, 62, 173)
+  );
+
+  padding-top: 40px;
+  @include medium-screen() {
+    padding-top: 80px;
+  }
+
+  .title {
+    font-size: 5rem;
+    color: white;
+    font-weight: 800;
+  }
+
+  .subtitle {
+    font-size: 2rem;
+    margin-top: 20px;
+    color: white;
+    font-weight: 600;
+
+    .meetingText {
+      text-decoration: underline;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .buttons {
+    margin-top: 40px;
+  }
+
+  .discordButton {
+    @include button(rgb(40, 214, 139));
+  }
+}

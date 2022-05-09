@@ -19,6 +19,17 @@
   }
 }
 
+.clubName {
+  font-size: 1.2rem;
+  text-align: center;
+  letter-spacing: 0.125rem;
+  margin-bottom: 40px;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-family: $font-mono;
+  color: rgb(64, 0, 255);
+}
+
 .navbar {
   height: 76px;
   margin-bottom: 60px;
@@ -41,7 +52,7 @@
 
 .pageHeader {
   text-align: center;
-  
+
   > h1 {
     font-size: 3em;
     font-weight: 900;
@@ -60,9 +71,9 @@
     margin-top: 5px;
     color: #494949;
     margin: 20px 0;
-    
+
     @include medium-screen() {
-      font-size: 1.5em; 
+      font-size: 1.5em;
     }
   }
 
