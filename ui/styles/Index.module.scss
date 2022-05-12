@@ -1,7 +1,11 @@
 @import 'theme.scss';
 @import 'screens.scss';
 
-@mixin button($bg-color) {
+$default-button-color: $theme-color-a;
+
+@mixin button($bg-color: $default-button-color) {
+  display: inline-block;
+  text-align: center;
   border: none;
   padding: 20px 30px;
   background: $bg-color;
@@ -23,11 +27,30 @@
   font-size: 1.2rem;
   text-align: center;
   letter-spacing: 0.125rem;
-  margin-bottom: 40px;
   font-weight: 800;
   text-transform: uppercase;
   font-family: $font-mono;
   color: rgb(64, 0, 255);
+}
+
+.schoolName {
+  font-size: 1rem;
+  text-align: center;
+  display: inline-block;
+  letter-spacing: 0.125rem;
+  width: 100%;
+  margin-bottom: 40px;
+  font-weight: 800;
+  text-transform: uppercase;
+  text-decoration: underline;
+  font-family: $font-mono;
+  color: rgb(54, 140, 216);
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+
+  &:hover {
+    color: rgb(88, 194, 236);
+  }
 }
 
 .navbar {
@@ -163,7 +186,7 @@
     align-items: center;
 
     .joinButton {
-      @include button(#a6fcc8);
+      @include button();
     }
   }
 }
@@ -198,7 +221,7 @@
     flex-direction: row;
 
     .button {
-      @include button(#39279e);
+      @include button();
 
       flex: 1;
     }
@@ -331,7 +354,7 @@
       position: relative;
 
       .button {
-        @include button(#3b178f);
+        @include button();
 
         $x-padding: 50px;
         padding-left: $x-padding;
@@ -349,7 +372,7 @@
         position: absolute;
         height: 200px;
         right: 0;
-        transform: translate(20%, -15%);
+        transform: translate(25%, 10%);
 
         @include medium-screen() {
           height: 400px;

@@ -2,15 +2,23 @@ import { ContentContainer } from 'components/ContentContainer';
 import { Footer } from 'components/Footer';
 import { HomeSqlView } from 'components/HomeSqlView';
 import { SkewBackground } from 'components/SkewBackground';
+import Head from 'next/head';
 import Link from 'next/link';
 import styles from 'styles/Index.module.scss';
 
 export default function Home() {
   return (
     <div>
+      <Head>
+        <title>Franklin Fullstack Developers</title>
+      </Head>
+
       <main className={styles.container}>
         <ContentContainer>
           <h1 className={styles.clubName}>FULLSTACK DEVELOPERS CLUB</h1>
+          <a href="https://frhs.egusd.net/" className={styles.schoolName}>
+            @ EGUSD Franklin High
+          </a>
 
           <header className={styles.pageHeader}>
             <h1>Learn Computer Science.</h1>
@@ -60,7 +68,14 @@ export default function Home() {
             </p>
 
             <div className={styles.exploreContainer}>
-              <button className={styles.button}>Explore</button>
+              <a
+                href="https://reactnative.dev/showcase"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.button}
+              >
+                Explore
+              </a>
 
               <div className={styles.imgContainer}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -155,7 +170,14 @@ export default function Home() {
               </p>
 
               <div className={styles.buttonsContainer}>
-                <button className={styles.button}>Learn about FHS CS</button>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="http://www.csfhs.net/"
+                  className={styles.button}
+                >
+                  Explore CS Classes
+                </a>
               </div>
             </div>
           </ContentContainer>
