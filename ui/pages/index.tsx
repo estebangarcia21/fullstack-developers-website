@@ -5,6 +5,7 @@ import { SkewBackground } from 'components/SkewBackground';
 import Head from 'next/head';
 import Link from 'next/link';
 import styles from 'styles/Index.module.scss';
+import { MEETING_END_TIME, MEETING_START_TIME, MEETING_WEEK_DAY } from './join';
 
 export default function Home() {
   return (
@@ -17,11 +18,15 @@ export default function Home() {
         <ContentContainer>
           <h1 className={styles.clubName}>FULLSTACK DEVELOPERS CLUB</h1>
           <a href="https://frhs.egusd.net/" className={styles.schoolName}>
-            @ EGUSD Franklin High
+            {'<< EGUSD Franklin High >>'}
           </a>
 
           <header className={styles.pageHeader}>
-            <h1>Learn Computer Science.</h1>
+            <h1>Learn Software Engineering</h1>
+            <h2>
+              Every {MEETING_WEEK_DAY} @ HG1 {MEETING_START_TIME} -{' '}
+              {MEETING_END_TIME}
+            </h2>
 
             <p>
               Learn how to create mobile applications, websites, use databases,
