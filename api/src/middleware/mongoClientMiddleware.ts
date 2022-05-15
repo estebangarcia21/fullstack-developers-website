@@ -9,14 +9,6 @@ export type MongoDbCollectionName =
   | 'sessions'
   | 'reset_password_tokens';
 
-export async function getMongoClient(): Promise<MongoClient> {
-  const mongoClient = new MongoClient(
-    process.env.MONGO_URL.replace('<password>', process.env.MONGO_PASSWORD)
-  );
-
-  return await mongoClient.connect();
-}
-
 async function getMongoCollection(
   this: AnyRequest,
   db: MongoDbName,
@@ -40,7 +32,6 @@ declare global {
   namespace Express {
     export interface Request {
       mongoClient: MongoClient;
-      getMongoClient: typeof getMongoClient;
       getMongoCollection: typeof getMongoCollection;
     }
   }

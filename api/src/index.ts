@@ -1,15 +1,19 @@
 import MongoStore from 'connect-mongo';
+import cors from 'cors';
 import dotenv from 'dotenv';
 import express, { json } from 'express';
 import session from 'express-session';
+import { MongoClient } from 'mongodb';
 import serverless from 'serverless-http';
-import mongoClientMiddleware, {
-  getMongoClient
-} from './middleware/mongoClientMiddleware';
+import mongoClientMiddleware from './middleware/mongoClientMiddleware';
 import { resUtilMiddleware } from './middleware/resUtilMiddleware';
 import router from './routes';
 import { SESSION_COOKIE_NAME } from './session';
-import cors from 'cors';
+
+const client = new MongoClient(
+  process.env.MONGO_URL.replace('<password>', process.env.MONGO_PASSWORD)
+);
+const clientPromise = client.connect();
 
 /**
  * Builds the express application.
@@ -26,13 +30,13 @@ export function buildApp(): express.Application {
 
   app.use(json());
 
-  const clientPromise = getMongoClient();
-
-  app.use(
-    cors({
-      origin: 'http://localhost:3000'
-    })
-  );
+  if (process.env.NODE_ENV !== 'production') {
+    app.use(
+      cors({
+        origin: 'http://localhost:3000'
+      })
+    );
+  }
 
   app.use(
     session({

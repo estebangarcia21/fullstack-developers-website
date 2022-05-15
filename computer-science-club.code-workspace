@@ -1,12 +1,12 @@
 {
   "folders": [
     {
-      "name": "ui",
-      "path": "ui"
-    },
-    {
       "name": "api",
       "path": "api"
+    },
+    {
+      "name": "ui",
+      "path": "ui"
     },
     {
       "name": "computer-science-club",

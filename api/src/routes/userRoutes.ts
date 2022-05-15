@@ -10,6 +10,7 @@ import mongoObjectIdSanitizer from '../mongoObjectIdSanitizer';
 import { passwordValidator } from '../passwordValidator';
 import { repository } from '../repo';
 import { checkTypedSchema } from '../typedSchema';
+import argon from 'argon2';
 
 const route = '/users';
 const router = Router();
@@ -74,7 +75,9 @@ router.post(
       firstName,
       lastName,
       email,
-      password
+      password: await argon.hash(password),
+      // @ts-ignore
+      role: 'member'
     });
 
     if (!user) {

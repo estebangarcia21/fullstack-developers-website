@@ -1,13 +1,16 @@
-service: express-app
+service: fullstack-website-api
+
+useDotenv: true
 
 provider:
   name: aws
-  runtime: nodejs6.10
-  stage: dev
+  runtime: nodejs12.x
+  stage: production
   region: us-west-2
 
 plugins:
   - serverless-offline
+  - serverless-dotenv-plugin
 
 custom:
   serverless-offline:
