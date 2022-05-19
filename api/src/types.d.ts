@@ -6,6 +6,7 @@ declare global {
       MONGO_URL: string;
       MONGO_PASSWORD: string;
       SESSION_SECRETS: string;
+      CORS_ORIGIN: string;
     }
   }
 }

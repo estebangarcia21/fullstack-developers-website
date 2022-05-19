@@ -30,30 +30,34 @@ export function buildApp(): express.Application {
 
   app.use(json());
 
-  if (process.env.NODE_ENV !== 'production') {
-    app.use(
-      cors({
-        origin: 'http://localhost:3000'
-      })
-    );
-  }
+  app.use(
+    cors({
+      origin: process.env.CORS_ORIGIN,
+      credentials: true
+    })
+  );
 
   app.use(
     session({
       name: SESSION_COOKIE_NAME,
       secret: process.env.SESSION_SECRETS.split(','),
-      saveUninitialized: true,
+      saveUninitialized: false,
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 7,
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        path: '/'
+        sameSite: 'none',
+        path: '/',
+        domain:
+          process.env.NODE_ENV === 'production'
+            ? process.env.CORS_ORIGIN
+            : undefined
       },
       resave: false,
       unset: 'destroy',
       store: new MongoStore({
         clientPromise,
+        dbName: 'website',
         collectionName: 'sessions'
       })
     })
