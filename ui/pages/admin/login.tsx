@@ -27,11 +27,14 @@ export default function AdminLogin() {
     loginMutation.mutate(data, {
       onSuccess: ({ data }) => {
         if (data.data.success) {
-          router.push('/admin/dashboard');
         }
       },
     });
   };
+
+  if (loginMutation.isSuccess && loginMutation.data.data.success) {
+    router.push('/admin/dashboard');
+  }
 
   if (loading) {
     return <div>Loading...</div>;

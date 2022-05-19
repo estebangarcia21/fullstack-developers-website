@@ -16,7 +16,6 @@ export default function useAuthentication(): [boolean, boolean] {
     {
       onSuccess: ({ data }) => {
         setAuth(data.data.auth);
-        setLoading(false);
       },
       onSettled: () => {
         setLoading(false);

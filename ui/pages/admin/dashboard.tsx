@@ -18,16 +18,14 @@ export default function AdminDashboard() {
   const { handleSubmit } = useForm<CreateResourceForm>();
 
   const logoutMutation = useMutation(() => {
-    return AXIOS_CLIENT.post('/logout', {}, { withCredentials: true });
+    return AXIOS_CLIENT.post('/logout', undefined, { withCredentials: true });
   });
 
-  const submit = () => {
-    logoutMutation.mutate(undefined, {
-      onSettled: () => {
-        router.push('/admin/login');
-      },
-    });
-  };
+  const submit = () => logoutMutation.mutate(undefined);
+
+  if (logoutMutation.isSuccess) {
+    router.push('/admin/login');
+  }
 
   if (loading) {
     return <div>Loading...</div>;
@@ -35,7 +33,7 @@ export default function AdminDashboard() {
 
   if (!auth) {
     router.push('/admin/login');
-    return <div></div>;
+    return <div>NO AUTH</div>;
   }
 
   return (
