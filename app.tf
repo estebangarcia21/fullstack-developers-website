@@ -35,9 +35,13 @@ resource "heroku_app" "api" {
 resource "heroku_build" "api" {
   app_id = heroku_app.api.id
 
-  source = {
+  source {
     path = local.api_path
   }
+
+  depends_on = [
+    heroku_app.api
+  ]
 }
 
 resource "heroku_formation" "api" {

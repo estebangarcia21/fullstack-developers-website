@@ -11,7 +11,7 @@ interface LoginForm {
 }
 
 export default function AdminLogin() {
-  // const [isAuthenticated, loading] = useAuthentication();
+  const [isAuthenticated, loading] = useAuthentication();
   const router = useRouter();
   const {
     register,
@@ -31,13 +31,13 @@ export default function AdminLogin() {
     router.push('/admin/dashboard');
   }
 
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-  // if (isAuthenticated) {
-  //   router.push('/admin/dashboard');
-  // }
+  if (isAuthenticated) {
+    router.push('/admin/dashboard');
+  }
 
   return (
     <div className={styles.loginContainer}>
