@@ -4,23 +4,17 @@ import dotenv from 'dotenv';
 import express, { json } from 'express';
 import session from 'express-session';
 import { MongoClient } from 'mongodb';
-import serverless from 'serverless-http';
 import mongoClientMiddleware from './middleware/mongoClientMiddleware';
 import { resUtilMiddleware } from './middleware/resUtilMiddleware';
 import router from './routes';
 import { SESSION_COOKIE_NAME } from './session';
-
-const client = new MongoClient(
-  process.env.MONGO_URL.replace('<password>', process.env.MONGO_PASSWORD)
-);
-const clientPromise = client.connect();
 
 /**
  * Builds the express application.
  *
  * @returns The API application.
  */
-export function buildApp(): express.Application {
+async function main() {
   dotenv.config({
     path:
       process.env.NODE_ENV === 'production' ? '.env.production' : '.env.local'
@@ -36,6 +30,11 @@ export function buildApp(): express.Application {
       origin: true
     })
   );
+
+  const client = new MongoClient(
+    process.env.MONGO_URL.replace('<password>', process.env.MONGO_PASSWORD)
+  );
+  const clientPromise = client.connect();
 
   app.use(
     session({
@@ -68,7 +67,9 @@ export function buildApp(): express.Application {
 
   app.use('/api', router);
 
-  return app;
+  app.listen(4000, () =>
+    console.log('Fullstack Developers API: Listening on port 4000')
+  );
 }
 
-export const handler = serverless(buildApp());
+main();

@@ -7,7 +7,8 @@
   "scripts": {
     "watch": "tsc -w",
     "build": "tsc",
-    "dev": "sls offline start",
+    "dev": "nodemon -q dist/index.js",
+    "start": "node dist/index.js",
     "deploy": "./deploy.sh",
     "deploy:function": "serverless deploy function --function fullstack-website-api"
   },

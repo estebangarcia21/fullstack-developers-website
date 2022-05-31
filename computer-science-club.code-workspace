@@ -9,6 +9,10 @@
       "path": "ui"
     },
     {
+      "name": "terraform",
+      "path": "terraform"
+    },
+    {
       "name": "computer-science-club",
       "path": "."
     }
