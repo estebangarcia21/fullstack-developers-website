@@ -12,8 +12,9 @@ terraform {
 }
 
 locals {
-  ui_path  = "./ui"
-  api_path = "./api"
+  ui_path     = "./ui"
+  api_path    = "./api"
+  api_tarball = "./dist/api.tar.gz"
 }
 
 # API
@@ -36,12 +37,8 @@ resource "heroku_build" "api" {
   app_id = heroku_app.api.id
 
   source {
-    path = local.api_path
+    path = local.api_tarball
   }
-
-  depends_on = [
-    heroku_app.api
-  ]
 }
 
 resource "heroku_formation" "api" {

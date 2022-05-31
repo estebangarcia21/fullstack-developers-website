@@ -4,7 +4,7 @@
 
 function display_help_msg {
   echo "|----------------------------------------------------|"
-  echo "| USAGE: $0 [plan|apply|init] [frontend|backend]  |        "
+  echo "| USAGE: $0 [plan|apply|upgrade]                     |"
   echo "|----------------------------------------------------|"
   echo "\n  !!! USE prod.tfvars FOR PRODUCTION ENVIRONMENTS !!!   \n"
 }
@@ -19,14 +19,26 @@ function verify_arg {
 function apply_terraform_config {
   TF_ACTION=$1
 
-  if [ $TF_ACTION == "init" ]; then
+  # Verify actions
+  if [ $TF_ACTION != "apply" ] && [ $TF_ACTION != "plan" ] && [ $TF_ACTION != "upgrade" ]; then
+    echo "Please provide a valid action: apply, plan, or init"
+    exit 1
+  fi
+
+  # Execute action logic
+  if [ $TF_ACTION == "upgrade" ]; then
     echo "Initializing Terraform configuration..."
-    terraform init $2 -input=false
+    terraform init -upgrade -input=false
     exit 0
   fi
 
   if [ $TF_ACTION == "plan" ]; then
     mkdir -p "tf_plans"
+    echo "Creating api tarball"
+
+    sh -c "$(cat ./build_api_tarball.sh)"
+
+    echo "Planning Terraform configuration..."
     terraform plan -var-file="./vars.tfvars" -out="tf_plans/plan"
     exit 0
   fi
@@ -34,18 +46,9 @@ function apply_terraform_config {
   TARGET=$2
   verify_arg $TARGET "Please provide a target file"
 
-  if [ $TARGET != "backend" ] && [ $TARGET != "frontend" ]; then
-    echo "Please provide a valid target: backend or frontend"
-    exit 1
-  fi
-
-  if [ $TF_ACTION != "apply" ] && [ $TF_ACTION != "plan" ] && [ $TF_ACTION != "init" ]; then
-    echo "Please provide a valid action: apply, plan, or init"
-    exit 1
-  fi
-
   if [ $TF_ACTION == "apply" ]; then
-    terraform apply tf_plans/plan
+    echo "Applying Terraform configuration..."
+    terraform apply "tf_plans/plan"
     exit 0
   fi
 }
@@ -56,4 +59,4 @@ if [ $# -eq 0 ]; then
   exit 1
 fi
 
-apply_terraform_config $1 $2
+apply_terraform_config $1
