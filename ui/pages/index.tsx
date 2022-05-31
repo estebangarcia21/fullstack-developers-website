@@ -109,14 +109,14 @@ export default function Home() {
             <section className={styles.learnBackendSection}>
               <div className={styles.textContainer}>
                 <div className={styles.header}>
-                  <h3>MANAGE BIG DATA</h3>
+                  <h3>MANAGE APPLICATION DATA</h3>
 
                   <h1>Learn database and server development</h1>
 
                   <p>
                     Leverage the most modern frameworks used in the software
                     development industry to build professional-grade mobile
-                    apps.{' '}
+                    apps.
                   </p>
                 </div>
 
