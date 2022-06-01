@@ -1,1 +1,1 @@
-docker build -t fsd-api . && docker run --env-file .production.env -it fsd-api
+docker run --env-file .env.production -it fsd-api

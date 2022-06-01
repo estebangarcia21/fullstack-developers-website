@@ -40,22 +40,29 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className={styles.loginContainer}>
-      <div>
-        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input type="email" {...register('email')} />
-            {errors.email && <span>This field is required</span>}
-          </div>
+    <div className={styles.container}>
+      <div className={styles.leftHalfStripe} />
+      <div className={styles.rightHalfStripe} />
 
-          <div>
-            <label htmlFor="password">Password</label>
-            <input type="password" {...register('password')} />
-          </div>
+      <div className={styles.loginContainer}>
+        <div>
+          <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+            <h1 className={styles.title}>Login</h1>
 
-          <button type="submit">Login</button>
-        </form>
+            <div>
+              <label htmlFor="email">Email</label>
+              <input type="email" {...register('email')} />
+              {errors.email && <span>This field is required</span>}
+            </div>
+
+            <div>
+              <label htmlFor="password">Password</label>
+              <input type="password" {...register('password')} />
+            </div>
+
+            <button type="submit">Login</button>
+          </form>
+        </div>
       </div>
     </div>
   );

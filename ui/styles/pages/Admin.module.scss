@@ -18,6 +18,30 @@
   }
 }
 
+.container {
+  .leftHalfStripe {
+    width: 50%;
+    height: 100%;
+    background-color: rgb(61, 38, 208);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transform: skew(-45deg);
+  }
+
+  .rightHalfStripe {
+    width: 50%;
+    height: 100%;
+    background-color: rgb(211, 218, 233);
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(100%, 0);
+    z-index: -1;
+  }
+}
+
 .loginContainer {
   display: flex;
   justify-content: center;
@@ -42,6 +66,14 @@
       align-items: center;
       width: 100%;
 
+      .title {
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: rgb(54, 234, 162);
+        margin-bottom: 20px;
+        text-align: left;
+      }
+
       > div {
         width: 100%;
 
@@ -56,8 +88,8 @@
         }
 
         > input {
-          background-color: transparent;
-          border: 1px solid rgb(255, 255, 255);
+          background-color: white;
+          border: none;
           border-radius: 2px;
           padding: 8px 12px;
           font-size: 0.85rem;
@@ -66,7 +98,7 @@
           transition: all 0.2s ease-in-out;
 
           &:focus {
-            background-color: white;
+            background-color: rgb(195, 236, 226);
             color: black;
           }
         }
@@ -74,6 +106,7 @@
 
       > button {
         @include auth-button();
+        margin-top: 15px;
       }
     }
   }

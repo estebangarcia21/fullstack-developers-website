@@ -31,6 +31,10 @@ resource "heroku_app" "api" {
   name   = "fullstack-developers-api"
   region = "us"
   stack  = "container"
+
+  sensitive_config_vars = merge({
+    for tuple in regexall("(.*)=(.*)", file("${local.api_path}/.env.production")) : tuple[0] => tuple[1]
+  })
 }
 
 resource "heroku_build" "api" {
@@ -65,28 +69,52 @@ data "vercel_project_directory" "ui" {
   path = local.ui_path
 }
 
-data "vercel_project" "ui" {
+resource "vercel_project" "ui" {
   name      = "fullstack-developers-website"
   framework = "nextjs"
+
+  root_directory = local.ui_path
 
   git_repository = {
     type = "github"
     repo = "estebangarcia21/fullstack-developers-website"
   }
+
+  environment = [
+    {
+      key    = "API_ENDPOINT"
+      value  = "https://${heroku_app.api.name}.herokuapp.com/api"
+      target = ["preview", "production"]
+    }
+  ]
+
+  depends_on = [
+    heroku_app.api
+  ]
 }
 
 resource "vercel_deployment" "ui" {
-  project_id  = data.vercel_project.ui.id
+  project_id  = resource.vercel_project.ui.id
   files       = data.vercel_project_directory.ui.files
   path_prefix = data.vercel_project_directory.ui.path
   production  = true
 
   environment = {
-    API_ENDPOINT = join("/", [heroku_app.api.web_url, "api"])
-    NODE_ENV     = "production"
+    "NODE_ENV" = "production"
   }
 
   depends_on = [
     heroku_app.api
   ]
+}
+
+output "api_url" {
+  value       = "https://${heroku_app.api.name}.herokuapp.com/api"
+  description = "API Endpoint for the website"
+}
+
+output "dyno_vars" {
+  value       = heroku_app.api.sensitive_config_vars
+  description = "Config values for the dyno"
+  sensitive   = true
 }

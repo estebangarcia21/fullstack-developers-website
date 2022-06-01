@@ -32,7 +32,10 @@ async function main() {
   );
 
   const client = new MongoClient(
-    process.env.MONGO_URL.replace('<password>', process.env.MONGO_PASSWORD)
+    process.env.MONGO_URL.replace(
+      '<password>',
+      process.env.MONGO_PASSWORD
+    ).concat('?retryWrites=true&w=majority')
   );
   const clientPromise = client.connect();
 
@@ -67,8 +70,10 @@ async function main() {
 
   app.use('/api', router);
 
-  app.listen(4000, () =>
-    console.log('Fullstack Developers API: Listening on port 4000')
+  const port = process.env.PORT || 4000;
+
+  app.listen(port, () =>
+    console.log(`Fullstack Developers API: Listening on port ${port}`)
   );
 }
 
