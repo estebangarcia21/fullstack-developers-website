@@ -21,11 +21,12 @@ export default function AdminDashboard() {
     return AXIOS_CLIENT.post('logout', undefined, { withCredentials: true });
   });
 
-  const submit = () => logoutMutation.mutate(undefined);
-
-  if (logoutMutation.isSuccess) {
-    router.push('/admin/login');
-  }
+  const submit = () =>
+    logoutMutation.mutate(undefined, {
+      onSuccess: () => {
+        router.push('/admin/login');
+      },
+    });
 
   if (loading) {
     return <div>Loading...</div>;

@@ -19,52 +19,51 @@ async function main() {
     dotenv.config({ path: '.env.local' });
   }
 
-  const client = new MongoClient(
-    process.env.MONGO_URL.replace(
+  let mongoUrl: string;
+  if (process.env.NODE_ENV === 'production') {
+    mongoUrl = process.env.MONGO_URL.replace(
       '<password>',
       process.env.MONGO_PASSWORD
-    ).concat('?retryWrites=true&w=majority')
-  );
-  const clientPromise = client.connect();
+    ).concat('?retryWrites=true&w=majority');
+  } else {
+    mongoUrl = process.env.MONGO_URL;
+  }
 
-  await client.connect();
+  const client = new MongoClient(mongoUrl);
+  const clientPromise = client.connect();
 
   const app = express();
 
-  app.use(json());
+  app.use(
+    cors({
+      origin: process.env.CORS_ORIGIN,
+      credentials: true
+    })
+  );
 
-  app.set('trust proxy', 1);
+  app.use(json());
 
   app.use(
     session({
       name: SESSION_COOKIE_NAME,
       secret: process.env.SESSION_SECRETS.split(','),
       saveUninitialized: false,
-      proxy: true,
       cookie: {
         maxAge: 1000 * 60 * 60 * 48,
-        httpOnly: false,
+        httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'none',
+        sameSite: false,
         path: '/',
         domain:
           process.env.NODE_ENV === 'production' ? '.vercel.app' : undefined
       },
-      resave: true,
+      resave: false,
       unset: 'destroy',
       store: new MongoStore({
         clientPromise,
         dbName: 'website',
         collectionName: 'sessions'
       })
-    })
-  );
-
-  app.use(
-    cors({
-      origin: process.env.CORS_ORIGIN,
-      credentials: true,
-      methods: ['GET', 'POST', 'OPTIONS']
     })
   );
 

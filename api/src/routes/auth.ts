@@ -4,6 +4,7 @@ import { RouterConfig } from '.';
 import { ResetPasswordTokens } from '../models/reset_password_tokens';
 import { UserRequest, UserUtil } from '../models/userRepo';
 import { passwordValidator } from '../passwordValidator';
+import { SESSION_COOKIE_NAME } from '../session';
 import { checkTypedSchema } from '../typedSchema';
 
 const route = '/';
@@ -123,10 +124,10 @@ router.post('/logout', async (req, res) => {
       message: 'You were not logged in'
     });
   }
-
   req.session.destroy((_err) => {});
+  res.clearCookie(SESSION_COOKIE_NAME);
 
-  res.data<LoginResult>({
+  return res.data<LoginResult>({
     success: true,
     message: 'Successfully logged out'
   });
