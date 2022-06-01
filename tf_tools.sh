@@ -36,7 +36,9 @@ function apply_terraform_config {
     mkdir -p "tf_plans"
 
     echo "Creating tarballs..."
-    sh -c "$(cat ./build_tarballs.sh)"
+    # sh -c "$(cat ./build_tarballs.sh)"
+    tar czf dist/api.tar.gz api
+    tar czf dist/ui.tar.gz ui
 
     echo "Planning Terraform configuration..."
     terraform plan -var-file="./vars.tfvars" -out="tf_plans/plan"

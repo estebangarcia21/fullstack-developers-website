@@ -1,36 +1,56 @@
-FROM node:12-alpine as test-target
-ENV NODE_ENV=development
-ENV PATH $PATH:/usr/src/app/node_modules/.bin
+# Install dependencies only when needed
+FROM node:16-alpine AS deps
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
 
-WORKDIR /usr/src/app
+# If using npm with a `package-lock.json` comment out above and use below instead
+# COPY package.json package-lock.json ./ 
+# RUN npm ci
 
-COPY package*.json ./
-
-# CI and release builds should use npm ci to fully respect the lockfile.
-# Local development may use npm install for opportunistic package updates.
-RUN npm install
-
+# Rebuild the source code only when needed
+FROM node:16-alpine AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Build
-FROM test-target as build-target
-ENV NODE_ENV=production
+# Next.js collects completely anonymous telemetry data about general usage.
+# Learn more here: https://nextjs.org/telemetry
+# Uncomment the following line in case you want to disable telemetry during the build.
+# ENV NEXT_TELEMETRY_DISABLED 1
 
-# Use build tools, installed as development packages, to produce a release build.
-RUN npm run build
+RUN yarn build
 
-# Reduce installed packages to production-only.
-RUN npm prune --production
+# If using npm comment out above and use below instead
+# RUN npm run build
 
-# Archive
-FROM node:12-alpine as archive-target
-ENV NODE_ENV=production
-ENV PATH $PATH:/usr/src/app/node_modules/.bin
+# Production image, copy all the files and run next
+FROM node:16-alpine AS runner
+WORKDIR /app
 
-WORKDIR /usr/src/app
+ENV NODE_ENV production
+# Uncomment the following line in case you want to disable telemetry during runtime.
+# ENV NEXT_TELEMETRY_DISABLED 1
 
-# Include only the release build and production packages.
-COPY --from=build-target /usr/src/app/node_modules node_modules
-COPY --from=build-target /usr/src/app/.next .next
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
 
-CMD ["next", "start", "-p", "$PORT"]
+# You only need to copy next.config.js if you are NOT using the default configuration
+COPY --from=builder /app/next.config.js ./
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/package.json ./package.json
+
+# Automatically leverage output traces to reduce image size 
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+
+# EXPOSE 3000
+
+# ENV PORT 3000
+
+CMD ["node", "server.js", "--port", "$PORT"]

@@ -15,23 +15,9 @@ import { SESSION_COOKIE_NAME } from './session';
  * @returns The API application.
  */
 async function main() {
-  dotenv.config({
-    path:
-      process.env.NODE_ENV === 'production' ? '.env.production' : '.env.local'
-  });
-
-  const app = express();
-
-  app.use(json());
-
-  app.set('trust proxy', 1);
-
-  app.use(
-    cors({
-      origin: process.env.CORS_ORIGIN,
-      credentials: true
-    })
-  );
+  if (process.env.NODE_ENV !== 'production') {
+    dotenv.config({ path: '.env.local' });
+  }
 
   const client = new MongoClient(
     process.env.MONGO_URL.replace(
@@ -41,16 +27,28 @@ async function main() {
   );
   const clientPromise = client.connect();
 
+  await client.connect();
+
+  const app = express();
+
+  app.use(json());
+
+  app.set('trust proxy', 1);
+
   app.use(
     session({
       name: SESSION_COOKIE_NAME,
       secret: process.env.SESSION_SECRETS.split(','),
       saveUninitialized: false,
+      proxy: true,
       cookie: {
         maxAge: 1000 * 60 * 60 * 48,
         httpOnly: false,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'none'
+        sameSite: 'none',
+        path: '/',
+        domain:
+          process.env.NODE_ENV === 'production' ? '.vercel.app' : undefined
       },
       resave: true,
       unset: 'destroy',
@@ -59,6 +57,14 @@ async function main() {
         dbName: 'website',
         collectionName: 'sessions'
       })
+    })
+  );
+
+  app.use(
+    cors({
+      origin: process.env.CORS_ORIGIN,
+      credentials: true,
+      methods: ['GET', 'POST', 'OPTIONS']
     })
   );
 

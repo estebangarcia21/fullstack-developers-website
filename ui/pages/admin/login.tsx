@@ -1,4 +1,5 @@
 import useAuthentication from 'hooks/useAuthentication';
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
@@ -63,3 +64,8 @@ export default function AdminLogin() {
     </div>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+
+  return { props: {} };
+};
