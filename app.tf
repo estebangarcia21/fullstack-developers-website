@@ -73,7 +73,7 @@ resource "vercel_project" "ui" {
   name      = "fullstack-developers-website"
   framework = "nextjs"
 
-  root_directory = local.ui_path
+  root_directory = "ui"
 
   git_repository = {
     type = "github"

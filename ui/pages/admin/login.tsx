@@ -20,7 +20,7 @@ export default function AdminLogin() {
   } = useForm<LoginForm>();
 
   const loginMutation = useMutation((formData: LoginForm) => {
-    return AXIOS_CLIENT.post('/login', formData, { withCredentials: true });
+    return AXIOS_CLIENT.post('login', formData, { withCredentials: true });
   });
 
   const onSubmit = (data: LoginForm) => {

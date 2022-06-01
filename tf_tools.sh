@@ -34,8 +34,8 @@ function apply_terraform_config {
 
   if [ $TF_ACTION == "plan" ]; then
     mkdir -p "tf_plans"
-    echo "Creating api tarball"
 
+    echo "Creating api tarball"
     sh -c "$(cat ./build_api_tarball.sh)"
 
     echo "Planning Terraform configuration..."

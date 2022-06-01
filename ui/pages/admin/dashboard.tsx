@@ -18,7 +18,7 @@ export default function AdminDashboard() {
   const { handleSubmit } = useForm<CreateResourceForm>();
 
   const logoutMutation = useMutation(() => {
-    return AXIOS_CLIENT.post('/logout', undefined, { withCredentials: true });
+    return AXIOS_CLIENT.post('logout', undefined, { withCredentials: true });
   });
 
   const submit = () => logoutMutation.mutate(undefined);

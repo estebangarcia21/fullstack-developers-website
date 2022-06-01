@@ -9,7 +9,7 @@ export default function useAuthentication(): [boolean, boolean] {
   useQuery(
     'authentication',
     async () => {
-      return await AXIOS_CLIENT.get('/is-authenticated', {
+      return await AXIOS_CLIENT.get('is-authenticated', {
         withCredentials: true,
       });
     },
