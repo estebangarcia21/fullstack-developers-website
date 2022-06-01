@@ -24,19 +24,15 @@ export default function AdminLogin() {
   });
 
   const onSubmit = (data: LoginForm) => {
-    loginMutation.mutate(data);
+    loginMutation.mutate(data, {
+      onSuccess: () => {
+        router.push('/admin/dashboard');
+      },
+    });
   };
-
-  if (loginMutation.isSuccess && loginMutation.data.data.success) {
-    router.push('/admin/dashboard');
-  }
 
   if (loading) {
     return <div>Loading...</div>;
-  }
-
-  if (isAuthenticated) {
-    router.push('/admin/dashboard');
   }
 
   return (

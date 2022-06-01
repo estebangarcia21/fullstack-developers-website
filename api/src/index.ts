@@ -24,10 +24,12 @@ async function main() {
 
   app.use(json());
 
+  app.set('trust proxy', 1);
+
   app.use(
     cors({
-      credentials: true,
-      origin: true
+      origin: process.env.CORS_ORIGIN,
+      credentials: true
     })
   );
 
@@ -45,17 +47,12 @@ async function main() {
       secret: process.env.SESSION_SECRETS.split(','),
       saveUninitialized: false,
       cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 7,
-        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 48,
+        httpOnly: false,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'none',
-        path: '/',
-        domain:
-          process.env.NODE_ENV === 'production'
-            ? process.env.CORS_ORIGIN
-            : undefined
+        sameSite: 'none'
       },
-      resave: false,
+      resave: true,
       unset: 'destroy',
       store: new MongoStore({
         clientPromise,

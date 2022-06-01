@@ -1,9 +1,5 @@
 terraform {
   required_providers {
-    vercel = {
-      source  = "vercel/vercel"
-      version = "~> 0.4"
-    }
     heroku = {
       source  = "heroku/heroku"
       version = "5.0.2"
@@ -13,11 +9,11 @@ terraform {
 
 locals {
   ui_path     = "./ui"
+  ui_tarball  = "./dist/ui.tar.gz"
   api_path    = "./api"
   api_tarball = "./dist/api.tar.gz"
 }
 
-# API
 variable "heroku_api_key" {
   type = string
 }
@@ -27,6 +23,7 @@ provider "heroku" {
   api_key = var.heroku_api_key
 }
 
+# API
 resource "heroku_app" "api" {
   name   = "fullstack-developers-api"
   region = "us"
@@ -57,64 +54,32 @@ resource "heroku_formation" "api" {
 }
 
 # UI
-variable "vercel_api_token" {
-  type = string
-}
+resource "heroku_app" "ui" {
+  name   = "fullstack-developers-ui"
+  region = "us"
+  stack  = "container"
 
-provider "vercel" {
-  api_token = var.vercel_api_token
-}
-
-data "vercel_project_directory" "ui" {
-  path = local.ui_path
-}
-
-resource "vercel_project" "ui" {
-  name      = "fullstack-developers-website"
-  framework = "nextjs"
-
-  root_directory = "ui"
-
-  git_repository = {
-    type = "github"
-    repo = "estebangarcia21/fullstack-developers-website"
+  sensitive_config_vars = {
+    NEXT_PUBLIC_API_ENDPOINT = "https://${heroku_app.api.name}.herokuapp.com/api"
   }
-
-  environment = [
-    {
-      key    = "API_ENDPOINT"
-      value  = "https://${heroku_app.api.name}.herokuapp.com/api"
-      target = ["preview", "production"]
-    }
-  ]
-
-  depends_on = [
-    heroku_app.api
-  ]
 }
 
-resource "vercel_deployment" "ui" {
-  project_id  = resource.vercel_project.ui.id
-  files       = data.vercel_project_directory.ui.files
-  path_prefix = data.vercel_project_directory.ui.path
-  production  = true
+resource "heroku_build" "ui" {
+  app_id = heroku_app.ui.id
 
-  environment = {
-    "NODE_ENV" = "production"
+  source {
+    path = local.ui_tarball
   }
+}
 
-  depends_on = [
-    heroku_app.api
-  ]
+resource "heroku_formation" "ui" {
+  app_id   = heroku_app.ui.id
+  type     = "web"
+  quantity = 1
+  size     = "free"
 }
 
 output "api_url" {
   value       = "https://${heroku_app.api.name}.herokuapp.com/api"
   description = "API Endpoint for the website"
-}
-
-output "dyno_vars" {
-  value       = heroku_app.api.sensitive_config_vars
-  description = "Config values for the dyno"
-  sensitive   = true
 }

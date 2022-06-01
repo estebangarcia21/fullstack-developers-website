@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb';
 import { AnyRequest } from './models';
 
-export const SESSION_COOKIE_NAME = 'X-FranklinFullstackDevelopers-Session';
+export const SESSION_COOKIE_NAME = 'fsd_session';
 
 export function bindSession(req: AnyRequest, id: string | ObjectId) {
   if (typeof id === 'string') {
